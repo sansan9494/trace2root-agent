@@ -1,0 +1,44 @@
+{
+  "reviewed_at": "2026-09-07",
+  "reviewer_type": "independent_ai_agent",
+  "human_reviewer": false,
+  "scope": "evaluation/public_rag_cases.json 全部60条中文检索问句",
+  "method": [
+    "检查60个ID和Query唯一性",
+    "核对service_name与目标Runbook",
+    "逐条核对问题能否由本地文档回答",
+    "检查expected_content_terms是否出现在目标文档并与具体问题直接相关",
+    "检查同一意图四个改写是否共用了不恰当的期望词"
+  ],
+  "initial_decisions": {
+    "pass": 42,
+    "revise": 18,
+    "reject": 0
+  },
+  "revised_ids": [
+    "k8s-readiness-traffic-4",
+    "k8s-probe-selection-3",
+    "k8s-resource-failure-1",
+    "k8s-resource-failure-2",
+    "k8s-resource-failure-3",
+    "k8s-resource-failure-4",
+    "k8s-debug-evidence-1",
+    "k8s-debug-evidence-4",
+    "security-readonly-4",
+    "security-approval-evidence-2",
+    "security-approval-evidence-3",
+    "security-approval-evidence-4",
+    "security-tool-failure-2",
+    "security-tool-failure-3",
+    "security-audit-redaction-1",
+    "security-audit-redaction-2",
+    "security-audit-redaction-3",
+    "security-audit-redaction-4"
+  ],
+  "resolution": "18条建议已合并到生成脚本；重新生成后60条均标记为independent_ai_reviewed。",
+  "limitations": [
+    "该复核由独立AI代理完成，不是另一位真人标注员。",
+    "60条问句覆盖15个语义意图，每个意图4个改写，不能表述为60个独立知识点。",
+    "简历或报告中应写独立AI复核；如需声称双人标注，仍需真人逐条签字复核。"
+  ]
+}

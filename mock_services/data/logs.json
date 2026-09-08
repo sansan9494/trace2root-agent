@@ -1,0 +1,7 @@
+[
+  {"timestamp":"2026-08-26T13:24:01+08:00","service_name":"payment-service","environment":"production","level":"ERROR","trace_id":"tr-pay-001","message":"upstream timeout gateway-service after 3000ms token=secret-demo-token"},
+  {"timestamp":"2026-08-26T13:24:08+08:00","service_name":"payment-service","environment":"production","level":"ERROR","trace_id":"tr-pay-002","message":"upstream timeout gateway-service after 3000ms user=test@example.com"},
+  {"timestamp":"2026-08-26T13:24:14+08:00","service_name":"payment-service","environment":"production","level":"WARN","trace_id":"tr-pay-003","message":"payment channel retry count=2"},
+  {"timestamp":"2026-08-26T13:20:00+08:00","service_name":"order-service","environment":"production","level":"WARN","trace_id":"tr-order-001","message":"payment dependency response slow queue=order-events"},
+  {"timestamp":"2026-08-26T12:10:00+08:00","service_name":"user-service","environment":"production","level":"INFO","trace_id":"tr-user-001","message":"health check ok"}
+]

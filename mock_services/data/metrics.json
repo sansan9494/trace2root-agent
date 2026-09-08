@@ -1,0 +1,16 @@
+{
+  "payment-service": {
+    "latency_p95_ms": [{"timestamp":"2026-08-26T13:20:00+08:00","value":1250},{"timestamp":"2026-08-26T13:25:00+08:00","value":1380}],
+    "error_rate": [{"timestamp":"2026-08-26T13:25:00+08:00","value":0.071}],
+    "db_pool_usage_ratio": [{"timestamp":"2026-08-26T13:25:00+08:00","value":0.42}],
+    "upstream_timeout_rate": [{"timestamp":"2026-08-26T13:25:00+08:00","value":0.19}]
+  },
+  "order-service": {
+    "queue_depth": [{"timestamp":"2026-08-26T13:25:00+08:00","value":4210}],
+    "consumer_error_rate": [{"timestamp":"2026-08-26T13:25:00+08:00","value":0.01}]
+  },
+  "user-service": {
+    "error_rate": [{"timestamp":"2026-08-26T13:25:00+08:00","value":0.003}],
+    "cache_hit_ratio": [{"timestamp":"2026-08-26T13:25:00+08:00","value":0.94}]
+  }
+}

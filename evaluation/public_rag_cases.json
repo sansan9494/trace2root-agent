@@ -1,0 +1,1033 @@
+[
+  {
+    "id": "k8s-readiness-traffic-1",
+    "intent_id": "k8s-readiness-traffic",
+    "category": "kubernetes_readiness",
+    "query": "Kubernetes 就绪探针失败后为什么服务不再给 Pod 转发流量？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "EndpointSlice",
+      "未就绪"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-readiness-traffic-2",
+    "intent_id": "k8s-readiness-traffic",
+    "category": "kubernetes_readiness",
+    "query": "Readiness Probe 失败会怎样影响 Service 的可用端点？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "EndpointSlice",
+      "未就绪"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-readiness-traffic-3",
+    "intent_id": "k8s-readiness-traffic",
+    "category": "kubernetes_readiness",
+    "query": "Pod 还在运行但 Ready 为 false 时流量去了哪里？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "EndpointSlice",
+      "未就绪"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-readiness-traffic-4",
+    "intent_id": "k8s-readiness-traffic",
+    "category": "kubernetes_readiness",
+    "query": "为什么就绪探针失败后 Pod 会从 Service 的可用端点中移除？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "EndpointSlice",
+      "未就绪"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-probe-selection-1",
+    "intent_id": "k8s-probe-selection",
+    "category": "kubernetes_probes",
+    "query": "慢启动应用如何避免存活探针导致反复重启？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "启动探针",
+      "存活探针"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-probe-selection-2",
+    "intent_id": "k8s-probe-selection",
+    "category": "kubernetes_probes",
+    "query": "startupProbe 成功之前会不会执行 livenessProbe？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "启动探针",
+      "存活探针"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-probe-selection-3",
+    "intent_id": "k8s-probe-selection",
+    "category": "kubernetes_probes",
+    "query": "启动探针、就绪探针和存活探针分别解决什么问题？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "启动探针",
+      "就绪探针",
+      "存活探针"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-probe-selection-4",
+    "intent_id": "k8s-probe-selection",
+    "category": "kubernetes_probes",
+    "query": "应用初始化很慢时应该优先配置哪种 Probe？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "启动探针",
+      "存活探针"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-crashloop-1",
+    "intent_id": "k8s-crashloop",
+    "category": "kubernetes_crashloop",
+    "query": "CrashLoopBackOff 应该先检查退出原因还是直接重启？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "Last State",
+      "Restart Count"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/debug-running-pod/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-crashloop-2",
+    "intent_id": "k8s-crashloop",
+    "category": "kubernetes_crashloop",
+    "query": "Pod 反复重启时需要查看哪些容器历史状态字段？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "Last State",
+      "Restart Count"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/debug-running-pod/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-crashloop-3",
+    "intent_id": "k8s-crashloop",
+    "category": "kubernetes_crashloop",
+    "query": "如何根据 Last State 和 Restart Count 排查容器崩溃？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "Last State",
+      "Restart Count"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/debug-running-pod/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-crashloop-4",
+    "intent_id": "k8s-crashloop",
+    "category": "kubernetes_crashloop",
+    "query": "容器持续重启时怎样把退出原因与发布时间对齐？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "Last State",
+      "Restart Count"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/debug-running-pod/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-resource-metrics-1",
+    "intent_id": "k8s-resource-metrics",
+    "category": "kubernetes_metrics",
+    "query": "metrics-server 的资源指标能否代替完整历史监控？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "metrics-server",
+      "历史监控"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-resource-metrics-2",
+    "intent_id": "k8s-resource-metrics",
+    "category": "kubernetes_metrics",
+    "query": "kubectl top 的 CPU 内存数据从哪里获取？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "metrics-server",
+      "历史监控"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-resource-metrics-3",
+    "intent_id": "k8s-resource-metrics",
+    "category": "kubernetes_metrics",
+    "query": "资源指标管道适合查询长期趋势吗？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "metrics-server",
+      "历史监控"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-resource-metrics-4",
+    "intent_id": "k8s-resource-metrics",
+    "category": "kubernetes_metrics",
+    "query": "为什么 metrics-server 只能作为当前资源排查证据之一？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "metrics-server",
+      "历史监控"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-resource-failure-1",
+    "intent_id": "k8s-resource-failure",
+    "category": "kubernetes_resource_failure",
+    "query": "Pod 内存告警后应该检查哪些 OOM 和驱逐证据？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "OOMKilled",
+      "驱逐事件"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-resource-failure-2",
+    "intent_id": "k8s-resource-failure",
+    "category": "kubernetes_resource_failure",
+    "query": "CPU 使用率异常时为什么还要检查 throttling？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "CPU throttling",
+      "requests/limits"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-resource-failure-3",
+    "intent_id": "k8s-resource-failure",
+    "category": "kubernetes_resource_failure",
+    "query": "怎样区分单个 Pod 资源异常和节点整体资源不足？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "节点",
+      "Pod",
+      "全局问题"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-resource-failure-4",
+    "intent_id": "k8s-resource-failure",
+    "category": "kubernetes_resource_failure",
+    "query": "修改 requests 和 limits 前要收集哪些资源证据？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "requests/limits",
+      "使用量",
+      "负载变化"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-rbac-1",
+    "intent_id": "k8s-rbac",
+    "category": "kubernetes_rbac",
+    "query": "排障 Agent 是否应该直接获得 cluster-admin？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "cluster-admin",
+      "最小权限"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-rbac-2",
+    "intent_id": "k8s-rbac",
+    "category": "kubernetes_rbac",
+    "query": "自动诊断账号应该遵循什么权限原则？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "cluster-admin",
+      "最小权限"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-rbac-3",
+    "intent_id": "k8s-rbac",
+    "category": "kubernetes_rbac",
+    "query": "为什么不能为了调试给 Agent 集群管理员权限？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "cluster-admin",
+      "最小权限"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-rbac-4",
+    "intent_id": "k8s-rbac",
+    "category": "kubernetes_rbac",
+    "query": "读取日志的账号是否也应该拥有删除工作负载权限？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "cluster-admin",
+      "最小权限"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/reference/access-authn-authz/rbac/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-debug-evidence-1",
+    "intent_id": "k8s-debug-evidence",
+    "category": "kubernetes_debugging",
+    "query": "调试已终止容器时应同时检查哪些退出状态和日志证据？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "退出码",
+      "Reason",
+      "Last State"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/debug-running-pod/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-debug-evidence-2",
+    "intent_id": "k8s-debug-evidence",
+    "category": "kubernetes_debugging",
+    "query": "Container Terminated 状态中的 Reason 有什么排障价值？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "退出码",
+      "Reason"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/debug-running-pod/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-debug-evidence-3",
+    "intent_id": "k8s-debug-evidence",
+    "category": "kubernetes_debugging",
+    "query": "Pod 崩溃调查应如何结合退出码和异常时间？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "退出码",
+      "Reason"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/debug-running-pod/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "k8s-debug-evidence-4",
+    "intent_id": "k8s-debug-evidence",
+    "category": "kubernetes_debugging",
+    "query": "容器状态为 Waiting、Running、Terminated 时各应关注什么？",
+    "service_name": "kubernetes-ops",
+    "expected_content_terms": [
+      "Waiting",
+      "Running",
+      "Terminated"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://kubernetes.io/zh-cn/docs/tasks/debug/debug-application/debug-running-pod/"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-readonly-1",
+    "intent_id": "security-readonly",
+    "category": "security_readonly",
+    "query": "查询告警和日志属于什么风险等级？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L1",
+      "脱敏"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-readonly-2",
+    "intent_id": "security-readonly",
+    "category": "security_readonly",
+    "query": "只读工具可以无限时间范围查询日志吗？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L1",
+      "脱敏"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-readonly-3",
+    "intent_id": "security-readonly",
+    "category": "security_readonly",
+    "query": "L1 日志查询为什么仍要限制条数并脱敏？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L1",
+      "脱敏"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-readonly-4",
+    "intent_id": "security-readonly",
+    "category": "security_readonly",
+    "query": "Agent 自动读取指标前需要做哪些安全限制？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "时间窗口",
+      "返回条数",
+      "脱敏"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-notification-1",
+    "intent_id": "security-notification",
+    "category": "security_notification",
+    "query": "向 Mock 通知渠道发送消息属于哪个风险等级？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L2",
+      "allowlist"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-notification-2",
+    "intent_id": "security-notification",
+    "category": "security_notification",
+    "query": "为什么通知目标需要配置 allowlist？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L2",
+      "allowlist"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-notification-3",
+    "intent_id": "security-notification",
+    "category": "security_notification",
+    "query": "L2 外部动作执行前要校验哪些信息？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L2",
+      "allowlist"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-notification-4",
+    "intent_id": "security-notification",
+    "category": "security_notification",
+    "query": "Agent 可以向任意聊天群发送故障报告吗？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L2",
+      "allowlist"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-l3-1",
+    "intent_id": "security-l3",
+    "category": "security_high_risk",
+    "query": "生产服务重启属于哪个风险等级，能否由 Agent 自动执行？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L3",
+      "人工审批"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-l3-2",
+    "intent_id": "security-l3",
+    "category": "security_high_risk",
+    "query": "回滚、扩容和流量切换为什么需要人工审批？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L3",
+      "人工审批"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-l3-3",
+    "intent_id": "security-l3",
+    "category": "security_high_risk",
+    "query": "Agent 已经找到高置信根因后可以直接重启吗？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L3",
+      "人工审批"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-l3-4",
+    "intent_id": "security-l3",
+    "category": "security_high_risk",
+    "query": "哪些可能改变服务状态的动作必须被审批门拦截？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L3",
+      "人工审批"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-l4-1",
+    "intent_id": "security-l4",
+    "category": "security_prohibited",
+    "query": "删除生产数据或者导出凭据能否通过审批放行？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L4",
+      "禁止执行"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-l4-2",
+    "intent_id": "security-l4",
+    "category": "security_prohibited",
+    "query": "首版 Agent 对关闭审计和清空队列如何处理？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L4",
+      "禁止执行"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-l4-3",
+    "intent_id": "security-l4",
+    "category": "security_prohibited",
+    "query": "L4 操作是不是审批通过后就能执行？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L4",
+      "禁止执行"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-l4-4",
+    "intent_id": "security-l4",
+    "category": "security_prohibited",
+    "query": "修改密钥或绕过访问控制属于什么安全级别？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "L4",
+      "禁止执行"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-approval-evidence-1",
+    "intent_id": "security-approval-evidence",
+    "category": "security_evidence",
+    "query": "批准回滚之前审批请求必须包含哪些证据和回退信息？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "回退方案",
+      "两个独立信号"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-61r3"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-approval-evidence-2",
+    "intent_id": "security-approval-evidence",
+    "category": "security_evidence",
+    "query": "只有一条错误日志时能否直接批准生产变更？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "单条日志",
+      "两个独立信号",
+      "降低置信度"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-61r3"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-approval-evidence-3",
+    "intent_id": "security-approval-evidence",
+    "category": "security_evidence",
+    "query": "高风险操作为什么需要两个独立信号交叉验证？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "两个独立信号",
+      "交叉验证"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-61r3"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-approval-evidence-4",
+    "intent_id": "security-approval-evidence",
+    "category": "security_evidence",
+    "query": "审批请求缺少回退方案时应该批准还是拒绝？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "回退方案",
+      "拒绝审批"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-61r3"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-approval-binding-1",
+    "intent_id": "security-approval-binding",
+    "category": "security_approval_state",
+    "query": "审批通过后如果工具参数改变，原审批还有效吗？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "task_id",
+      "参数变化"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-approval-binding-2",
+    "intent_id": "security-approval-binding",
+    "category": "security_approval_state",
+    "query": "审批记录为什么要绑定 task_id 和工具参数摘要？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "task_id",
+      "参数变化"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-approval-binding-3",
+    "intent_id": "security-approval-binding",
+    "category": "security_approval_state",
+    "query": "一个任务的重启审批能否复用到另一个任务？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "task_id",
+      "参数变化"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-approval-binding-4",
+    "intent_id": "security-approval-binding",
+    "category": "security_approval_state",
+    "query": "审批超时或者执行参数变化后应如何处理？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "task_id",
+      "参数变化"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-tool-failure-1",
+    "intent_id": "security-tool-failure",
+    "category": "security_degraded",
+    "query": "MCP 查询失败可以判断系统正常吗？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "MCP",
+      "系统正常"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-61r3"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-tool-failure-2",
+    "intent_id": "security-tool-failure",
+    "category": "security_degraded",
+    "query": "工具超时后故障报告应该隐藏失败吗？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "工具超时",
+      "写入报告"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-61r3"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-tool-failure-3",
+    "intent_id": "security-tool-failure",
+    "category": "security_degraded",
+    "query": "监控数据源断开时 Agent 能否判断系统正常？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "数据源失败",
+      "系统正常"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-61r3"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-tool-failure-4",
+    "intent_id": "security-tool-failure",
+    "category": "security_degraded",
+    "query": "未查询到指标是否等于服务没有异常？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "MCP",
+      "系统正常"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-61r3"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-audit-redaction-1",
+    "intent_id": "security-audit-redaction",
+    "category": "security_audit",
+    "query": "工具审计记录必须保存哪些调用信息？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "工具名",
+      "参数",
+      "风险等级",
+      "耗时",
+      "trace_id"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-audit-redaction-2",
+    "intent_id": "security-audit-redaction",
+    "category": "security_audit",
+    "query": "日志里出现 Token 和邮箱时应怎样处理？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "Token",
+      "邮箱",
+      "遮盖"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-audit-redaction-3",
+    "intent_id": "security-audit-redaction",
+    "category": "security_audit",
+    "query": "为什么工具调用审计必须记录 trace_id？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "工具调用",
+      "trace_id"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  },
+  {
+    "id": "security-audit-redaction-4",
+    "intent_id": "security-audit-redaction",
+    "category": "security_audit",
+    "query": "审批记录中可以保存明文 API Key 吗？",
+    "service_name": "security-approval",
+    "expected_content_terms": [
+      "API Key",
+      "明文凭据"
+    ],
+    "expected_source_file": "runbook.md",
+    "reference_urls": [
+      "https://doi.org/10.6028/NIST.SP.800-53r5"
+    ],
+    "primary_annotation": "project_author",
+    "review_status": "independent_ai_reviewed"
+  }
+]

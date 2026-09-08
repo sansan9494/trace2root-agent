@@ -1,0 +1,25 @@
+* text=auto
+
+# Keep Linux/WSL entrypoints and source files portable from Windows checkouts.
+*.sh text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.ndjson text eol=lf
+*.csv text eol=lf
+*.env text eol=lf
+
+*.pdf binary
+*.parquet binary
+*.idx binary
+
+# Preserve upstream source formatting without treating its whitespace as ours.
+data/public_sources/** -whitespace
+
+# Preserve third-party source documents byte-for-byte, including upstream
+# whitespace, while keeping diff checks strict for project-owned files.
+data/public_sources/** -whitespace

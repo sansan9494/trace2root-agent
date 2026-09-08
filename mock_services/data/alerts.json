@@ -1,0 +1,4 @@
+[
+  {"alert_name":"HighLatency","service_name":"payment-service","environment":"production","severity":"warning","status":"firing","starts_at":"2026-08-26T10:20:00+08:00","labels":{"instance":"payment-01"}},
+  {"alert_name":"QueueBacklog","service_name":"order-service","environment":"production","severity":"warning","status":"firing","starts_at":"2026-08-26T11:05:00+08:00","labels":{"queue":"order-events"}}
+]

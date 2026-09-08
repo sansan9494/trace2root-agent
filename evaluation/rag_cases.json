@@ -1,0 +1,56 @@
+[
+  {
+    "id": "payment-latency-threshold",
+    "query": "支付接口 P95 超过 800ms 应该怎么排查",
+    "service_name": "payment-service",
+    "expected_document_type": "alert_runbook"
+  },
+  {
+    "id": "payment-upstream-incident",
+    "query": "upstream timeout gateway-service 历史根因",
+    "service_name": "payment-service",
+    "expected_document_type": "incident_history"
+  },
+  {
+    "id": "payment-service-dependency",
+    "query": "payment-service 的核心上游和数据库是什么",
+    "service_name": "payment-service",
+    "expected_document_type": "service_manual"
+  },
+  {
+    "id": "order-backlog-runbook",
+    "query": "订单队列积压但消费者错误率正常时检查什么",
+    "service_name": "order-service",
+    "expected_document_type": "alert_runbook"
+  },
+  {
+    "id": "order-service-responsibility",
+    "query": "order-service 负责什么业务并依赖哪些服务",
+    "service_name": "order-service",
+    "expected_document_type": "service_manual"
+  },
+  {
+    "id": "order-lock-incident",
+    "query": "数据库行锁等待导致订单积压的历史事故",
+    "service_name": "order-service",
+    "expected_document_type": "incident_history"
+  },
+  {
+    "id": "user-error-runbook",
+    "query": "用户服务错误率升高如何检查认证依赖",
+    "service_name": "user-service",
+    "expected_document_type": "alert_runbook"
+  },
+  {
+    "id": "user-redaction-policy",
+    "query": "user-service 日志中的手机号邮箱令牌如何处理",
+    "service_name": "user-service",
+    "expected_document_type": "service_manual"
+  },
+  {
+    "id": "user-certificate-incident",
+    "query": "认证服务证书过期会出现什么现象",
+    "service_name": "user-service",
+    "expected_document_type": "incident_history"
+  }
+]

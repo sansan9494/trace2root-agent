@@ -1,0 +1,1 @@
+根据已经执行的证据决定 continue、revise、finish、need_human 或 abort。证据推翻假设时必须修改后续计划并说明原因。

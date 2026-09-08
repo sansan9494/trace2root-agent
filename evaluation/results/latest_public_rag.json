@@ -1,0 +1,1903 @@
+{
+  "generated_at": "2026-09-06T16:07:59.594412+00:00",
+  "embedding_provider": "sentence_transformers",
+  "embedding_model": "BAAI/bge-small-zh-v1.5",
+  "reranker_provider": "cross_encoder",
+  "reranker_model": "BAAI/bge-reranker-base",
+  "cases_file": "evaluation/public_rag_cases.json",
+  "case_count": 60,
+  "repeat_count": 3,
+  "standard_deviation_type": "population",
+  "runs": [
+    {
+      "run": 1,
+      "vector_baseline": {
+        "recall@3": 0.9166666666666666,
+        "mrr": 0.8416666666666667,
+        "ndcg@3": 0.8609108127976215
+      },
+      "hybrid_rrf": {
+        "recall@3": 1.0,
+        "mrr": 0.9833333333333333,
+        "ndcg@3": 0.9876976584523819
+      }
+    },
+    {
+      "run": 2,
+      "vector_baseline": {
+        "recall@3": 0.9166666666666666,
+        "mrr": 0.8416666666666667,
+        "ndcg@3": 0.8609108127976215
+      },
+      "hybrid_rrf": {
+        "recall@3": 1.0,
+        "mrr": 0.9833333333333333,
+        "ndcg@3": 0.9876976584523819
+      }
+    },
+    {
+      "run": 3,
+      "vector_baseline": {
+        "recall@3": 0.9166666666666666,
+        "mrr": 0.8416666666666667,
+        "ndcg@3": 0.8609108127976215
+      },
+      "hybrid_rrf": {
+        "recall@3": 1.0,
+        "mrr": 0.9833333333333333,
+        "ndcg@3": 0.9876976584523819
+      }
+    }
+  ],
+  "repeat_statistics": {
+    "vector_baseline": {
+      "recall@3": {
+        "mean": 0.9166666666666666,
+        "std": 0.0
+      },
+      "mrr": {
+        "mean": 0.8416666666666667,
+        "std": 0.0
+      },
+      "ndcg@3": {
+        "mean": 0.8609108127976215,
+        "std": 0.0
+      }
+    },
+    "hybrid_rrf": {
+      "recall@3": {
+        "mean": 1.0,
+        "std": 0.0
+      },
+      "mrr": {
+        "mean": 0.9833333333333333,
+        "std": 0.0
+      },
+      "ndcg@3": {
+        "mean": 0.9876976584523819,
+        "std": 0.0
+      }
+    }
+  },
+  "vector_baseline": {
+    "mode": "vector",
+    "recall@3": 0.9166666666666666,
+    "mrr": 0.8416666666666667,
+    "ndcg@3": 0.8609108127976215,
+    "cases": [
+      {
+        "id": "k8s-readiness-traffic-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-readiness-traffic-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-readiness-traffic-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-readiness-traffic-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-probe-selection-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-probe-selection-2",
+        "hit": true,
+        "rank": 3,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-probe-selection-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-probe-selection-4",
+        "hit": true,
+        "rank": 2,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-crashloop-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-crashloop-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-crashloop-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-crashloop-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-metrics-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-metrics-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-metrics-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-metrics-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-failure-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-failure-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-failure-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-failure-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-rbac-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-rbac-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-rbac-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-rbac-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-debug-evidence-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-debug-evidence-2",
+        "hit": true,
+        "rank": 2,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-debug-evidence-3",
+        "hit": true,
+        "rank": 2,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-debug-evidence-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-readonly-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-readonly-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-readonly-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-readonly-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-notification-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-notification-2",
+        "hit": false,
+        "rank": null,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-notification-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-notification-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l3-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l3-2",
+        "hit": false,
+        "rank": null,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l3-3",
+        "hit": true,
+        "rank": 3,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l3-4",
+        "hit": false,
+        "rank": null,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l4-1",
+        "hit": false,
+        "rank": null,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l4-2",
+        "hit": true,
+        "rank": 2,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l4-3",
+        "hit": false,
+        "rank": null,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l4-4",
+        "hit": true,
+        "rank": 3,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-evidence-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-evidence-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-evidence-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-evidence-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-binding-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-binding-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-binding-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-binding-4",
+        "hit": true,
+        "rank": 2,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-tool-failure-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-tool-failure-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-tool-failure-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-tool-failure-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-audit-redaction-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-audit-redaction-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-audit-redaction-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-audit-redaction-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      }
+    ]
+  },
+  "hybrid_rrf": {
+    "mode": "hybrid",
+    "recall@3": 1.0,
+    "mrr": 0.9833333333333333,
+    "ndcg@3": 0.9876976584523819,
+    "cases": [
+      {
+        "id": "k8s-readiness-traffic-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-readiness-traffic-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-readiness-traffic-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-readiness-traffic-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-probe-selection-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-probe-selection-2",
+        "hit": true,
+        "rank": 2,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-probe-selection-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-probe-selection-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-crashloop-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-crashloop-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-crashloop-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-crashloop-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-metrics-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-metrics-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-metrics-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-metrics-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-failure-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-failure-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-failure-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-resource-failure-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-rbac-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-rbac-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-rbac-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-rbac-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-debug-evidence-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-debug-evidence-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-debug-evidence-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "k8s-debug-evidence-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-readonly-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-readonly-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-readonly-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-readonly-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-notification-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-notification-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-notification-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-notification-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l3-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l3-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l3-3",
+        "hit": true,
+        "rank": 2,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l3-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l4-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l4-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l4-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-l4-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-evidence-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-evidence-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-evidence-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-evidence-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-binding-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-binding-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-binding-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-approval-binding-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-tool-failure-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-tool-failure-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-tool-failure-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-tool-failure-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-audit-redaction-1",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-audit-redaction-2",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-audit-redaction-3",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "security-audit-redaction-4",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "runbook.md"
+        ]
+      }
+    ]
+  },
+  "improvement": {
+    "recall@3": 0.08333333333333337,
+    "mrr": 0.1416666666666666,
+    "ndcg@3": 0.1267868456547604
+  }
+}

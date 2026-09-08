@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-09-03T14:03:44.597436+00:00",
+  "case_count": 3,
+  "generator_model": "qwen3:4b",
+  "judge_model": "qwen3:4b",
+  "embedding_model": "BAAI/bge-small-zh-v1.5",
+  "summary": {
+    "context_precision": 0.9722222221842592,
+    "context_recall": 0.6666666666666666,
+    "faithfulness": 0.875,
+    "answer_relevancy": 0.4863855922767419
+  },
+  "cases": [
+    {
+      "id": "payment-latency",
+      "query": "支付接口 P95 超过 800ms 应该怎么排查？",
+      "reference": "先确认告警时间窗口和影响范围，再检查接口 P95、错误率、数据库连接池与上游超时率，并结合日志定位具体依赖；涉及重启或回滚时必须人工审批。",
+      "response": "1. 确认是否为真实流量异常：检查 `http_request_duration_seconds` 的 P95 和错误率；2. 检查数据库连接池使用率（`db_pool_usage_ratio`），若高于 0.9 需排查慢 SQL 和连接泄漏；3. 搜索 `upstream timeout`、`connection refused` 和 Trace ID；4. 若上游超时占比上升，联系网关值班并开启降级，生产重启或回滚需人工审批。",
+      "sources": [
+        "runbook.md",
+        "runbook.md",
+        "service.md",
+        "incidents.md",
+        "incidents.md"
+      ],
+      "scores": {
+        "context_precision": 0.9166666666361111,
+        "context_recall": 1.0,
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.3374118978656666
+      },
+      "errors": {}
+    },
+    {
+      "id": "order-backlog",
+      "query": "订单队列积压但消费者错误率正常时检查什么？",
+      "reference": "检查生产消费速率差、消费者实例数、处理耗时和下游依赖；错误率正常时重点判断流量突增、消费能力不足或慢依赖，不应直接执行高风险变更。",
+      "response": "当订单队列积压但消费者错误率正常时，需检查下游支付服务响应时间。根据历史事故，积压可能由支付服务延迟或数据库行锁等待引起，禁止未经审批直接清空队和队列。",
+      "sources": [
+        "runbook.md",
+        "incidents.md",
+        "service.md"
+      ],
+      "scores": {
+        "context_precision": 0.99999999995,
+        "context_recall": 0.6666666666666666,
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.5470708386215385
+      },
+      "errors": {}
+    },
+    {
+      "id": "user-auth-errors",
+      "query": "用户服务错误率升高时如何排查认证依赖？",
+      "reference": "核对 user-service 错误率和认证依赖健康状态，按时间窗口检索认证失败、证书或超时日志，并对手机号、邮箱和令牌脱敏后再形成结论。",
+      "response": "用户服务错误率升高时，需先按状态码聚类日志，检查认证依赖（auth-service）和缓存命中率。凭证轮换属于 L4 操作，首版 Agent 禁止执行，需审批。历史上曾因认证服务证书过期（TLS 错误）和缓存雪崩（命中率下降、数据库 QPS 激增）导致问题，需重点排查。",
+      "sources": [
+        "runbook.md",
+        "service.md",
+        "incidents.md"
+      ],
+      "scores": {
+        "context_precision": 0.9999999999666667,
+        "context_recall": 0.3333333333333333,
+        "faithfulness": 0.625,
+        "answer_relevancy": 0.5746740403430204
+      },
+      "errors": {}
+    }
+  ],
+  "scope_warning": "本地小样本与同模型自评仅用于回归，不代表生产质量或独立裁判结论。"
+}

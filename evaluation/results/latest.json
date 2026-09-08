@@ -1,0 +1,299 @@
+{
+  "generated_at": "2026-09-03T11:14:19.517289+00:00",
+  "embedding_provider": "sentence_transformers",
+  "embedding_model": "BAAI/bge-small-zh-v1.5",
+  "reranker_provider": "cross_encoder",
+  "reranker_model": "BAAI/bge-reranker-base",
+  "case_count": 9,
+  "vector_baseline": {
+    "mode": "vector",
+    "recall@3": 1.0,
+    "mrr": 1.0,
+    "ndcg@3": 1.0,
+    "cases": [
+      {
+        "id": "payment-latency-threshold",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "incident_history"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "payment-upstream-incident",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "incident_history",
+          "service_manual",
+          "incident_history"
+        ],
+        "top_sources": [
+          "incidents.md",
+          "service.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "payment-service-dependency",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "service_manual",
+          "alert_runbook",
+          "incident_history"
+        ],
+        "top_sources": [
+          "service.md",
+          "runbook.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "order-backlog-runbook",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "incident_history",
+          "service_manual"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "incidents.md",
+          "service.md"
+        ]
+      },
+      {
+        "id": "order-service-responsibility",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "service_manual",
+          "incident_history",
+          "alert_runbook"
+        ],
+        "top_sources": [
+          "service.md",
+          "incidents.md",
+          "runbook.md"
+        ]
+      },
+      {
+        "id": "order-lock-incident",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "incident_history",
+          "alert_runbook",
+          "service_manual"
+        ],
+        "top_sources": [
+          "incidents.md",
+          "runbook.md",
+          "service.md"
+        ]
+      },
+      {
+        "id": "user-error-runbook",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "service_manual",
+          "incident_history"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "service.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "user-redaction-policy",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "service_manual",
+          "alert_runbook",
+          "incident_history"
+        ],
+        "top_sources": [
+          "service.md",
+          "runbook.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "user-certificate-incident",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "incident_history",
+          "alert_runbook",
+          "service_manual"
+        ],
+        "top_sources": [
+          "incidents.md",
+          "runbook.md",
+          "service.md"
+        ]
+      }
+    ]
+  },
+  "hybrid_rrf": {
+    "mode": "hybrid",
+    "recall@3": 1.0,
+    "mrr": 1.0,
+    "ndcg@3": 1.0,
+    "cases": [
+      {
+        "id": "payment-latency-threshold",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "alert_runbook",
+          "service_manual"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "runbook.md",
+          "service.md"
+        ]
+      },
+      {
+        "id": "payment-upstream-incident",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "incident_history",
+          "incident_history",
+          "service_manual"
+        ],
+        "top_sources": [
+          "incidents.md",
+          "incidents.md",
+          "service.md"
+        ]
+      },
+      {
+        "id": "payment-service-dependency",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "service_manual",
+          "alert_runbook",
+          "incident_history"
+        ],
+        "top_sources": [
+          "service.md",
+          "runbook.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "order-backlog-runbook",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "incident_history",
+          "service_manual"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "incidents.md",
+          "service.md"
+        ]
+      },
+      {
+        "id": "order-service-responsibility",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "service_manual",
+          "alert_runbook",
+          "incident_history"
+        ],
+        "top_sources": [
+          "service.md",
+          "runbook.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "order-lock-incident",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "incident_history",
+          "alert_runbook",
+          "service_manual"
+        ],
+        "top_sources": [
+          "incidents.md",
+          "runbook.md",
+          "service.md"
+        ]
+      },
+      {
+        "id": "user-error-runbook",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "alert_runbook",
+          "service_manual",
+          "incident_history"
+        ],
+        "top_sources": [
+          "runbook.md",
+          "service.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "user-redaction-policy",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "service_manual",
+          "alert_runbook",
+          "incident_history"
+        ],
+        "top_sources": [
+          "service.md",
+          "runbook.md",
+          "incidents.md"
+        ]
+      },
+      {
+        "id": "user-certificate-incident",
+        "hit": true,
+        "rank": 1,
+        "top_document_types": [
+          "incident_history",
+          "alert_runbook",
+          "service_manual"
+        ],
+        "top_sources": [
+          "incidents.md",
+          "runbook.md",
+          "service.md"
+        ]
+      }
+    ]
+  },
+  "improvement": {
+    "recall@3": 0.0,
+    "mrr": 0.0,
+    "ndcg@3": 0.0
+  }
+}

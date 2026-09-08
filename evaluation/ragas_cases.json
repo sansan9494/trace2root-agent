@@ -1,0 +1,20 @@
+[
+  {
+    "id": "payment-latency",
+    "query": "支付接口 P95 超过 800ms 应该怎么排查？",
+    "service_name": "payment-service",
+    "reference": "先确认告警时间窗口和影响范围，再检查接口 P95、错误率、数据库连接池与上游超时率，并结合日志定位具体依赖；涉及重启或回滚时必须人工审批。"
+  },
+  {
+    "id": "order-backlog",
+    "query": "订单队列积压但消费者错误率正常时检查什么？",
+    "service_name": "order-service",
+    "reference": "检查生产消费速率差、消费者实例数、处理耗时和下游依赖；错误率正常时重点判断流量突增、消费能力不足或慢依赖，不应直接执行高风险变更。"
+  },
+  {
+    "id": "user-auth-errors",
+    "query": "用户服务错误率升高时如何排查认证依赖？",
+    "service_name": "user-service",
+    "reference": "核对 user-service 错误率和认证依赖健康状态，按时间窗口检索认证失败、证书或超时日志，并对手机号、邮箱和令牌脱敏后再形成结论。"
+  }
+]

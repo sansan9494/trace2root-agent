@@ -1,0 +1,4114 @@
+{
+  "generated_at": "2026-09-07T03:07:28.424671+00:00",
+  "dataset": "Edge Delta RootCauseBench public subset",
+  "dataset_source": "https://github.com/edgedelta/root-cause-bench",
+  "license": "Apache-2.0",
+  "model": "qwen3:4b",
+  "case_count": 32,
+  "repeat_count": 3,
+  "standard_deviation_type": "population",
+  "first_failing_service_accuracy": 0.8125,
+  "remediation_accuracy": 0.5,
+  "repeat_statistics": {
+    "first_failing_service_accuracy": {
+      "mean": 0.8125,
+      "std": 0.0
+    },
+    "remediation_accuracy": {
+      "mean": 0.5,
+      "std": 0.0
+    }
+  },
+  "error_count": 0,
+  "duration_seconds": 332.218,
+  "runs": [
+    {
+      "run": 1,
+      "case_count": 32,
+      "first_failing_service_accuracy": 0.8125,
+      "remediation_accuracy": 0.5,
+      "error_count": 0,
+      "duration_seconds": 242.528,
+      "details": [
+        {
+          "scenario": "ai-agent-registration-missing",
+          "prediction": {
+            "first_failing_service": "ai-agent-svc",
+            "causal_component": "ai-agent-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "ai-agent-svc returning HTTP 500 on agent lookups; 'thread-title-determiner' not found in org-scoped registry (alert)",
+              "predefined internal agent lookup failed: 'thread-title-determiner' not found (org-scoped) (log)",
+              "context builder aborted: upstream ai-agent-svc returned 500 on getPredefinedAgent (log)",
+              "ai-agent-svc commit 7b8e1c4a9d2f3e6b0c5a8f1d7e4b2c9a6f3d0e1b changed predefined-agent lookup handler to add scope: \"org\" (deploy)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "ai-agent-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 13.563,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "auth-jwt-validation-regression",
+          "prediction": {
+            "first_failing_service": "gatewayservice",
+            "causal_component": "gatewayservice",
+            "root_cause_type": "token expiration",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "alert: gatewayservice 401 unauthorized ratio above 5%",
+              "metric_anomalies: token_validation_errors_per_sec spiked to 491.0",
+              "log_patterns: jwt validation failed: token is expired in gatewayservice",
+              "representative_error_logs: jwt validation failed: token is expired starting at 2026-09-14T10:12:00Z",
+              "representative_traces: multiple 401 errors from gatewayservice with token validation failures"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "gatewayservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.363,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 7,
+            "logs": 5,
+            "traces": 11,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "bad-data-poison-record",
+          "prediction": {
+            "first_failing_service": "event-enricher-1",
+            "causal_component": "event-enricher-1",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "record validation error: field 'lat' out of range [-90,90] got 412.700000 record_id=geo-evt-8f3a2174 partition=3 offset=148820291 producer=geo-partner-feed",
+              "geo-events-iq ApproximateAgeOfOldestMessage rising; consumer redelivering same offset 148820291",
+              "enriched <N> geo records from geo-events-iq; committed offset"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "event-enricher-1",
+            "expected_remediation": "purge-bad-data"
+          },
+          "error": null,
+          "duration_seconds": 4.135,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "cache-ttl-stampede",
+          "prediction": {
+            "first_failing_service": "productdb",
+            "causal_component": "catalogservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "productdb CPU sustained above 85% (critical alert at 2026-07-11T13:46:00Z)",
+              "productdb query p99 elevated from 9.8ms to 133.3ms (incident_median) at 2026-07-11T14:05:00Z",
+              "productdb queries per second increased from 156.45 to 692.1 (incident_median) at 2026-07-11T14:05:00Z",
+              "catalogservice cache hit ratio dropped from 0.9714 to 0.561 (incident_median) at 2026-07-11T14:05:00Z",
+              "catalogservice cache miss events increased by 474 (delta_vs_baseline) with read-through to productdb at 2026-07-11T14:05:00Z"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "productdb",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.952,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 7,
+            "logs": 3,
+            "traces": 8,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "checkout-latency-n-plus-one",
+          "prediction": {
+            "first_failing_service": "checkoutservice",
+            "causal_component": "checkoutservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "checkoutservice p99 latency above 800ms for 3m (alert)",
+              "checkoutservice db_query_count_per_request increased from 2.95 to 3.8 (metric_anomaly)",
+              "checkoutservice slow request: PlaceOrder exceeded 3000ms (log)",
+              "checkoutservice timeout budget exceeded in cartservice (log)",
+              "checkoutservice v2026.06.18-1501 deploy (change_context) with refactor to add catalog item lookup"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "checkoutservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 6.086,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 5,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "cloud-region-impairment",
+          "prediction": {
+            "first_failing_service": "mediaservice",
+            "causal_component": "aws.s3",
+            "root_cause_type": "external_dependency",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "S3 error rate increased to 34% in mediaservice (5xx ratio) at 2026-06-20T13:53:00Z",
+              "S3 error rate increased to 21.25% in catalogservice (5xx ratio) at 2026-06-20T14:05:00Z",
+              "S3 GetObject failures with 503 ServiceUnavailable in mediaservice logs starting at 2026-06-20T13:46:11Z",
+              "S3 ListObjectsV2 failures with 503 ServiceUnavailable in catalogservice logs starting at 2026-06-20T13:48:13Z",
+              "AWS Health Dashboard shows S3 us-east-1 degraded from 2026-06-20T13:46:00Z to 2026-06-20T14:04:00Z with increased error rates and latencies"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "mediaservice",
+            "expected_remediation": "failover"
+          },
+          "error": null,
+          "duration_seconds": 9.091,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 6,
+            "logs": 7,
+            "traces": 6,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "config-fanout-sampled-traces",
+          "prediction": {
+            "first_failing_service": "dashboard-svc",
+            "causal_component": "pipeline-transformer",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "dashboard-svc dashboard_data_lag_s > 300s for 10m (alert)",
+              "dashboard render failed: pipeline data stale (log)",
+              "config resolution slow: batch deadline exceeded (log)",
+              "pipeline-transformer v2026.07.24-1510 deploy at 15:10:00Z (deploy)",
+              "config-svc rpc queue saturated (log)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": true,
+            "expected_first_failing_service": "pipeline-transformer",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 8.424,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 11,
+            "logs": 3,
+            "traces": 6,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "dashboard-db-schema-missing-table",
+          "prediction": {
+            "first_failing_service": "dashboard-svc",
+            "causal_component": "dashboard-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "sqlalchemy.exc.ProgrammingError: relation \"dashboard_favorites\" does not exist",
+              "db_missing_table_errors_total increased from baseline",
+              "dashboard-svc returning 500s with sqlalchemy errors",
+              "dashboard-svc deployed new code that added favorites endpoint without table migration",
+              "dashboard-svc_new_charts_ui feature flag turned on"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "dashboard-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 7.079,
+          "evidence_counts": {
+            "metrics": 2,
+            "log_patterns": 2,
+            "logs": 1,
+            "traces": 2,
+            "deploys": 2
+          }
+        },
+        {
+          "scenario": "dns-resolver-degradation",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "coredns",
+            "root_cause_type": "dns_resolution_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "paymentservice outbound call error ratio above 5% (alert)",
+              "coredns reporting elevated SERVFAIL (external_status)",
+              "multiple services failing to resolve DNS (representative_traces)",
+              "coredns forward plugin degraded (external_status)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "escalate-upstream"
+          },
+          "error": null,
+          "duration_seconds": 5.43,
+          "evidence_counts": {
+            "metrics": 12,
+            "log_patterns": 9,
+            "logs": 13,
+            "traces": 6,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "dynamodb-write-capacity-breach",
+          "prediction": {
+            "first_failing_service": "ai-memory-svc",
+            "causal_component": "ai-memory-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "DynamoDB ProvisionedThroughputExceededException on table memory-store",
+              "single-item PutItem to memory-store (batching disabled)",
+              "ai-memory-svc returned 503 for memory persist"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "ai-memory-svc",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.522,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 4,
+            "logs": 3,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "frontend-race-condition-5xx",
+          "prediction": {
+            "first_failing_service": "frontend",
+            "causal_component": "frontend",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: frontend 5xx error rate above 2% for 3m",
+              "metric: requests_per_sec increased from 700.55 to 1442.95 (1.06x) with frontend",
+              "log: fatal error: concurrent map writes (173 events) in frontend",
+              "trace: multiple frontend POST /api/checkout requests with 500/502 errors",
+              "change: frontend v2026.06.18-1501 deploy (15:01:40) introduced checkout handler refactor with potential race condition"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "frontend",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 6.861,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 9,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "grpc-deadline-too-tight",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "productcatalogservice",
+            "root_cause_type": "external_dependency_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "alert: recommendationservice rpc_client_error_rate above 2% for 3m",
+              "metric_anomaly: productcatalogservice rpc_server_cancelled_rate increased by 277x",
+              "log_pattern: catalog Fetch failed: rpc error: code = DeadlineExceeded",
+              "trace: productcatalogservice ListProducts spans with context canceled by client",
+              "change_context: recommendationservice deploy changed catalog client timeout from 5s to 300ms"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 8.901,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 8,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "ingester-flush-interval-oom",
+          "prediction": {
+            "first_failing_service": "platform-api",
+            "causal_component": "metric-ingester",
+            "root_cause_type": "code_fault",
+            "remediation": "scale",
+            "confidence": "high",
+            "evidence": [
+              "metric_query_p95_ms > 2000ms for 5m (platform-api)",
+              "metric query timeout: upstream metric-ingester unresponsive (query-svc)",
+              "dashboard metric query failed: upstream timeout (platform-api)",
+              "flush cycle skipped: buffer not due (metric-ingester)",
+              "points_flushed_per_min dropped from 779.85 to 100.15 (metric-ingester)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "metric-ingester",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 10.068,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "inventory-connection-pool-exhaustion",
+          "prediction": {
+            "first_failing_service": "inventoryservice",
+            "causal_component": "inventoryservice",
+            "root_cause_type": "db_pool_exhaustion",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "inventoryservice DB pool acquire wait p99 above 0.5s (critical alert)",
+              "inventoryservice db_pool_wait_seconds_p99 metric spiked to 9.8s (alert observed)",
+              "inventoryservice db_pool_in_use metric dropped from 11.9 to 10.8 (anomaly)",
+              "inventoryservice db_pool_max_conns metric stayed at 50 (anomaly)",
+              "540 log entries: pgx pool: context deadline exceeded acquiring connection (pool exhausted) in inventoryservice"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "inventoryservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 9.259,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 4,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "logging-debug-disk-fill",
+          "prediction": {
+            "first_failing_service": "logging-agent",
+            "causal_component": "logging-agent",
+            "root_cause_type": "disk_space_exhausted",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "disk_used_pct metric exceeded 90% threshold at 2026-06-22T10:25:00Z",
+              "write_error_count increased to 50 from baseline 0",
+              "log_write_throughput_lps spiked to 11252.5 LPS",
+              "multiple log-agent errors: 'no space left on device' and 'filesystem mounted read-only'",
+              "ingest-gateway buffer usage increased to 76% from baseline 9.945%"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "logging-agent",
+            "expected_remediation": "config-revert"
+          },
+          "error": null,
+          "duration_seconds": 9.868,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 6,
+            "logs": 7,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "metric-ingestor-metadata-deser",
+          "prediction": {
+            "first_failing_service": "metric-ingestor-1",
+            "causal_component": "metric-ingestor-1",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "metric-ingestor-1 failing to deserialize metric envelopes (deserialize_error_ratio: 0.97)",
+              "queue metric-ingestor-1-iq backlog rising (ApproximateAgeOfOldestMessage: 900s)",
+              "failed to deserialize metric envelope: missing required field 'meta' (22 errors)",
+              "metric-ingestor-1-iq ApproximateAgeOfOldestMessage rising (8 warnings)",
+              "metric-ingestor-1 version v2026.06.24-1057 deployed at 2026-06-24T10:57:00Z with change: #ingest Tidy metric decoder construction"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "metric-ingestor-1",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 12.262,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 2,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "noisy-neighbor-node-saturation",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "recommendationservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: recommendationservice http_server_duration_p99_ms exceeded 500ms at 2026-06-20T13:48:00Z",
+              "metric_anomalies: recommendationservice container_cpu_cfs_throttled_seconds increased from baseline (0.023 -> 0.036) at 2026-06-20T14:05:00Z",
+              "log_patterns: ranking handler exceeded soft latency budget (cpu contended) in recommendationservice at 2026-06-20T13:42:00Z",
+              "representative_error_logs: recommendationservice timeout errors from frontend and checkoutservice starting at 2026-06-20T13:52:00Z",
+              "representative_traces: frontend and checkoutservice traces show recommendationservice latency spikes (1500ms) at 2026-06-20T13:52:00Z"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "reschedule"
+          },
+          "error": null,
+          "duration_seconds": 11.363,
+          "evidence_counts": {
+            "metrics": 11,
+            "log_patterns": 6,
+            "logs": 6,
+            "traces": 6,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "notification-buffer-oom-silent",
+          "prediction": {
+            "first_failing_service": "workflow-engine",
+            "causal_component": "notification-svc",
+            "root_cause_type": "external_dependency_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "notification-svc is failing to dispatch notifications (connection refused) from workflow-engine",
+              "platform-api reports user notification enqueue failures due to upstream unavailable",
+              "notification-svc container restarts increased from baseline (7.0 vs 0.0)",
+              "notification-svc dispatch queue depth spiked to 109861.3",
+              "workflow-engine notification dispatch error ratio spiked to 0.862"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "notification-svc",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 14.548,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 8,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "olapdb-tso-cas-retry-budget",
+          "prediction": {
+            "first_failing_service": "stream-taskmanager",
+            "causal_component": "olapdb-tso",
+            "root_cause_type": "capacity",
+            "remediation": "scale",
+            "confidence": "high",
+            "evidence": [
+              "FlinkJobUnhealthy on Metric_threshold_monitoring_job (stream-taskmanager taskmanager); upstream olapdb-tso FoundationDB transaction timeouts during TSO leader-election",
+              "olapdb-tso: fdb_txn_timeout_total increased to 72.0 (from baseline 0.0)",
+              "olapdb-tso: tso_cas_retry_exhausted_total increased to 48.0 (from baseline 0.0)",
+              "stream-taskmanager: flink_job_uptime_seconds dropped to 0.0 (from baseline 3600.0)",
+              "olapdb-tso: FoundationDB transaction timeout during TSO leader-election; CAS operation failed (retry budget exhausted)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "olapdb-tso",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 11.406,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 5,
+            "logs": 7,
+            "traces": 4,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "orders-index-migration-drift",
+          "prediction": {
+            "first_failing_service": "orders-api",
+            "causal_component": "orders-api",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "orders-api orders_latency_p99_ms > 1200ms for 10m",
+              "order listing query scanning far more rows than expected; latency degraded",
+              "order listing latency creeping above baseline as result set grows",
+              "order-history page timeout: upstream orders-api exceeded deadline",
+              "db_rows_examined increased from baseline (170229.3 -> 1724505.05)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "orders-api",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 10.881,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 10,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "payment-nil-deref-panic",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "paymentservice panic: runtime error: invalid memory address or nil pointer dereference (318 logs)",
+              "checkoutservice reports payment call failed: upstream 500 from paymentservice (142 logs)",
+              "paymentservice error rate 5xx ratio spiked to 71% (critical alert at 10:25:00Z)",
+              "paymentservice panic count increased to 23 (last timestamp 10:32:00Z)",
+              "checkoutservice error rate 5xx ratio spiked to 43.45% (relative change +209%)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 14.408,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 2
+          }
+        },
+        {
+          "scenario": "payment-refund-poison-batch",
+          "prediction": {
+            "first_failing_service": "payment-refund-svc",
+            "causal_component": "payment-refund-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "first_failing_service: payment-refund-svc (2026-07-22T11:02:00Z error: invalid currency code \"XBT\")",
+              "causal_component: payment-refund-svc (2026-07-22T11:02:00Z error: invalid currency code \"XBT\")",
+              "root_cause_type: code_fault (invalid currency code handling in payment-refund-svc)",
+              "remediation: rollback (payment-refund-svc commit e788f668d1eb072434ea1181187b16856adf09f2 introduced invalid currency code handling)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "payment-refund-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 8.737,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "recommendation-memory-leak",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "recommendationservice",
+            "root_cause_type": "memory_leak",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "OOMKilled: container exceeded memory limit 512Mi (3 times)",
+              "GC pause 480ms; heap growing, forced GC did not reclaim",
+              "recommendation rail failed to render: upstream unavailable (84 times)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 8.464,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "search-mapping-query-break",
+          "prediction": {
+            "first_failing_service": "searchservice",
+            "causal_component": "searchservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "searchservice query error rate spiked to 94.6% at 2026-06-18T15:06:00Z (critical alert)",
+              "searchservice shows 7100+ errors with 'no mapping found for field [title]' and 'parse_exception: failed to parse search source: unknown field [title]' in logs",
+              "frontend shows 980 errors due to upstream searchservice failures",
+              "recommendationservice shows 540 errors due to searchservice failures",
+              "searchservice metric 'search_result_count_avg' dropped to 0.14 (from baseline 13.945) indicating no results returned"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "searchservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.175,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 6,
+            "logs": 5,
+            "traces": 6,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "session-cache-clockskew",
+          "prediction": {
+            "first_failing_service": "auth-gw",
+            "causal_component": "session-cache",
+            "root_cause_type": "cache",
+            "remediation": "roll-forward",
+            "confidence": "high",
+            "evidence": [
+              "session lookup slow: falling back to primary store (auth-gw)",
+              "login failed: session validation timeout (frontend)",
+              "cache miss; evicted key required origin re-fetch (session-cache)",
+              "session_lookup_p95_ms > 900ms for 10m (auth-gw)",
+              "session_lookup_error_ratio increased to 0.152 (auth-gw)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "session-cache",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.372,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 11,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "shared-config-pool-drain",
+          "prediction": {
+            "first_failing_service": "checkoutservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "checkoutservice charge_latency_p99_ms breached 2000ms at 2026-07-20T09:50:00Z",
+              "paymentservice db_conn_wait_ms spiked to 2850ms at 2026-07-20T10:30:00Z",
+              "checkoutservice checkout_error_ratio increased to 20.3% at 2026-07-20T10:30:00Z",
+              "paymentservice db conn acquire failed: context deadline exceeded at 2026-07-20T09:35:00Z",
+              "checkoutservice charge rpc slow: upstream took 2900ms at 2026-07-20T09:37:00Z"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.971,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "tls-cert-expiry",
+          "prediction": {
+            "first_failing_service": "orderservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "certificate_expired",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "alert: orderservice outbound calls to paymentservice failing above 5% for 3m with TLS handshake errors due to expired certificate (paymentservice leaf cert notAfter: 2026-06-18T15:04:00Z)",
+              "metric: paymentservice tls_cert_seconds_until_expiry shows negative value (-3960s) indicating certificate expired",
+              "representative_traces show frontend -> checkoutservice -> orderservice chain failing with TLS errors",
+              "certificate expiration time (2026-06-18T15:04:00Z) is 4 seconds before the first failure timestamp (2026-06-18T15:04:08Z)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "orderservice",
+            "expected_remediation": "rotate-cert"
+          },
+          "error": null,
+          "duration_seconds": 4.723,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 8,
+            "logs": 6,
+            "traces": 20,
+            "deploys": 5
+          }
+        },
+        {
+          "scenario": "traffic-surge-flash-sale",
+          "prediction": {
+            "first_failing_service": "frontend",
+            "causal_component": "frontend",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: frontend p99 latency above 800ms for 3m",
+              "metric: http_5xx_per_sec increased from 0.3 to 44.45",
+              "metric: request_queue_depth increased from 1.25 to 115.2",
+              "log: worker pool saturated, request queued",
+              "log: request rejected: server overloaded, shedding load"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "frontend",
+            "expected_remediation": "scale"
+          },
+          "error": null,
+          "duration_seconds": 3.405,
+          "evidence_counts": {
+            "metrics": 18,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 8,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "transformer-dependency-startup-crash",
+          "prediction": {
+            "first_failing_service": "pipeline-transformer",
+            "causal_component": "pipeline-transformer",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: pipeline-transformer in CrashLoopBackOff; startup panic loading protobuf runtime: version conflict (proto: duplicate registration / incompatible runtime)",
+              "metric_anomaly: pipeline-transformer pod_restart_total increased from baseline 0.0 to 9.0",
+              "log_pattern: panic: proto: duplicate registration / incompatible protobuf runtime version",
+              "representative_error_log: pipeline-transformer failed to start (CrashLoopBackOff) due to protobuf version conflict",
+              "change_context: pipeline-transformer deploy with commit defc5b01691d1f6eaa8544cf812715552dc9e1da updated go module pins from v1.50.0 to v1.53.0 of aws-sdk-go, which caused protobuf runtime version conflict"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "pipeline-transformer",
+            "expected_remediation": "config-revert"
+          },
+          "error": null,
+          "duration_seconds": 3.818,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 2,
+            "deploys": 1
+          }
+        },
+        {
+          "scenario": "unbounded-query-delayed-onset",
+          "prediction": {
+            "first_failing_service": "searchservice",
+            "causal_component": "searchservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "slow query: SELECT ... FROM search_events took 490ms (2026-06-21T09:40:00Z)",
+              "slow query: SELECT ... FROM search_events took 590ms (2026-06-21T10:00:00Z)",
+              "slow query: SELECT ... FROM search_events took 690ms (2026-06-21T10:20:00Z)",
+              "slow query: SELECT ... FROM search_events took 740ms (2026-06-21T10:30:00Z)",
+              "slow query: SELECT ... FROM search_events took 770ms (2026-06-21T10:36:00Z)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "searchservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.682,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 4,
+            "logs": 9,
+            "traces": 5,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "upstream-payment-provider-outage",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "stripe",
+            "root_cause_type": "external_dependency",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "alert: paymentservice charge error rate above 5% for 3m",
+              "metric_anomalies: paymentservice charge_error_rate_pct incident_median 0.6",
+              "log_patterns: POST https://api.stripe.com/v1/charges returned 503",
+              "representative_error_logs: POST https://api.stripe.com/v1/charges exceeded deadline",
+              "representative_traces: HTTP POST api.stripe.com/v1/charges (retry 1) status 503"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "failover"
+          },
+          "error": null,
+          "duration_seconds": 3.703,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 10,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "webhook-keepalive-default-flip",
+          "prediction": {
+            "first_failing_service": "webhook-dispatcher",
+            "causal_component": "webhook-dispatcher",
+            "root_cause_type": "network",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "webhook post failed: connect: cannot assign requested address",
+              "TLS certificate renews in <N> days warning",
+              "connection pool warmup retries exceeded <N> times",
+              "disk usage above <N>% on scratch volume"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "webhook-dispatcher",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.008,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 9,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 12
+          }
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "case_count": 32,
+      "first_failing_service_accuracy": 0.8125,
+      "remediation_accuracy": 0.5,
+      "error_count": 0,
+      "duration_seconds": 135.936,
+      "details": [
+        {
+          "scenario": "ai-agent-registration-missing",
+          "prediction": {
+            "first_failing_service": "ai-agent-svc",
+            "causal_component": "ai-agent-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "ai-agent-svc returning HTTP 500 on agent lookups; 'thread-title-determiner' not found in org-scoped registry (alert)",
+              "predefined internal agent lookup failed: 'thread-title-determiner' not found (org-scoped) (log)",
+              "context builder aborted: upstream ai-agent-svc returned 500 on getPredefinedAgent (log)",
+              "ai-agent-svc commit 7b8e1c4a9d2f3e6b0c5a8f1d7e4b2c9a6f3d0e1b changed predefined-agent lookup handler to add scope: \"org\" (deploy)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "ai-agent-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 3.735,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "auth-jwt-validation-regression",
+          "prediction": {
+            "first_failing_service": "gatewayservice",
+            "causal_component": "gatewayservice",
+            "root_cause_type": "token expiration",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "alert: gatewayservice 401 unauthorized ratio above 5%",
+              "metric_anomalies: token_validation_errors_per_sec spiked to 491.0",
+              "log_patterns: jwt validation failed: token is expired in gatewayservice",
+              "representative_error_logs: jwt validation failed: token is expired starting at 2026-09-14T10:12:00Z",
+              "representative_traces: multiple 401 errors in gatewayservice with token validation failures"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "gatewayservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.985,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 7,
+            "logs": 5,
+            "traces": 11,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "bad-data-poison-record",
+          "prediction": {
+            "first_failing_service": "event-enricher-1",
+            "causal_component": "event-enricher-1",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "record validation error: field 'lat' out of range [-90,90] got 412.700000 record_id=geo-evt-8f3a2174 partition=3 offset=148820291 producer=geo-partner-feed",
+              "geo-events-iq ApproximateAgeOfOldestMessage rising; consumer redelivering same offset 148820291",
+              "enriched <N> geo records from geo-events-iq; committed offset",
+              "event-enricher-1 failing to validate geo records from geo-events-iq; queue geo-events-iq backlog rising (ApproximateAgeOfOldestMessage)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "event-enricher-1",
+            "expected_remediation": "purge-bad-data"
+          },
+          "error": null,
+          "duration_seconds": 4.33,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "cache-ttl-stampede",
+          "prediction": {
+            "first_failing_service": "productdb",
+            "causal_component": "catalogservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "productdb CPU sustained above 85% (critical alert at 2026-07-11T13:46:00Z)",
+              "productdb query p99 elevated from 9.8ms to 133.3ms (incident_median at 2026-07-11T14:05:00Z)",
+              "productdb queries per second increased from 156.45 to 692.1 (incident_median at 2026-07-11T14:05:00Z)",
+              "catalogservice cache hit ratio dropped from 0.9714 to 0.561 (incident_median at 2026-07-11T14:05:00Z)",
+              "catalogservice cache miss events increased by 474 (delta_vs_baseline at 2026-07-11T14:05:00Z) with read-through to productdb"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "productdb",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.482,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 7,
+            "logs": 3,
+            "traces": 8,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "checkout-latency-n-plus-one",
+          "prediction": {
+            "first_failing_service": "checkoutservice",
+            "causal_component": "checkoutservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "checkoutservice p99 latency above 800ms for 3m (alert)",
+              "checkoutservice db_query_count_per_request increased from 2.95 to 3.8 (metric_anomaly)",
+              "checkoutservice slow request: PlaceOrder exceeded 3000ms (log)",
+              "checkoutservice timeout budget exceeded in cartservice (log)",
+              "checkoutservice commit v2026.06.18-1501 (deploy) with refactor to add catalog item lookup"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "checkoutservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.603,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 5,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "cloud-region-impairment",
+          "prediction": {
+            "first_failing_service": "mediaservice",
+            "causal_component": "aws.s3",
+            "root_cause_type": "external_dependency",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "S3 error rate in us-east-1 increased from baseline (0.002) to 0.3427 (mediaservice) and 0.2125 (catalogservice) starting at 2026-06-20T13:46:11Z",
+              "AWS Health Dashboard shows S3 us-east-1 degraded starting at 2026-06-20T13:46:00Z with 503 SlowDown/ServiceUnavailable",
+              "mediaservice logs show 612 GetObject failures with 503 and 388 retries with SlowDown",
+              "frontend shows 233 errors due to mediaservice 503",
+              "S3 client config changes in mediaservice (timeout increased from 3s to 5s, retries from 3 to 4) but not the root cause"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "mediaservice",
+            "expected_remediation": "failover"
+          },
+          "error": null,
+          "duration_seconds": 5.476,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 6,
+            "logs": 7,
+            "traces": 6,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "config-fanout-sampled-traces",
+          "prediction": {
+            "first_failing_service": "dashboard-svc",
+            "causal_component": "pipeline-transformer",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "dashboard-svc dashboard_data_lag_s > 300s for 10m (alert)",
+              "dashboard render failed: pipeline data stale (log)",
+              "config resolution slow: batch deadline exceeded (log)",
+              "pipeline-transformer batch process latency increased (metric_anomalies)",
+              "config-svc rpc queue saturated (log)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": true,
+            "expected_first_failing_service": "pipeline-transformer",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.229,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 11,
+            "logs": 3,
+            "traces": 6,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "dashboard-db-schema-missing-table",
+          "prediction": {
+            "first_failing_service": "dashboard-svc",
+            "causal_component": "dashboard-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "sqlalchemy.exc.ProgrammingError: relation \"dashboard_favorites\" does not exist",
+              "db_missing_table_errors_total increased from baseline",
+              "dashboard-svc returning 500s with sqlalchemy errors",
+              "dashboard-svc deployed new code that added favorites endpoint without table migration"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "dashboard-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 2.333,
+          "evidence_counts": {
+            "metrics": 2,
+            "log_patterns": 2,
+            "logs": 1,
+            "traces": 2,
+            "deploys": 2
+          }
+        },
+        {
+          "scenario": "dns-resolver-degradation",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "coredns",
+            "root_cause_type": "dns_resolution_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "paymentservice outbound call error ratio above 5% (alert)",
+              "coredns reporting elevated SERVFAIL (external_status)",
+              "multiple services failing to resolve DNS (representative_traces)",
+              "coredns forward plugin degraded (external_status)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "escalate-upstream"
+          },
+          "error": null,
+          "duration_seconds": 3.223,
+          "evidence_counts": {
+            "metrics": 12,
+            "log_patterns": 9,
+            "logs": 13,
+            "traces": 6,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "dynamodb-write-capacity-breach",
+          "prediction": {
+            "first_failing_service": "ai-memory-svc",
+            "causal_component": "ai-memory-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "DynamoDB ProvisionedThroughputExceededException on table memory-store",
+              "single-item PutItem to memory-store (batching disabled)",
+              "ai-memory-svc returned 503 for memory persist"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "ai-memory-svc",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 2.431,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 4,
+            "logs": 3,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "frontend-race-condition-5xx",
+          "prediction": {
+            "first_failing_service": "frontend",
+            "causal_component": "frontend",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: frontend 5xx error rate above 2% for 3m",
+              "metric: requests_per_sec increased from 700.55 to 1442.95 (1.06x) with frontend",
+              "log: fatal error: concurrent map writes (173 events) in frontend",
+              "trace: multiple frontend POST /api/checkout requests with 500/502 errors",
+              "change: frontend v2026.06.18-1501 deploy (15:01:40) introduced checkout handler refactor with potential race condition"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "frontend",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.102,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 9,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "grpc-deadline-too-tight",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "productcatalogservice",
+            "root_cause_type": "external_dependency_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "alert: recommendationservice rpc_client_error_rate above 2% for 3m",
+              "metric_anomaly: productcatalogservice rpc_server_cancelled_rate increased by 277x",
+              "log_pattern: catalog Fetch failed: rpc error: code = DeadlineExceeded",
+              "trace: productcatalogservice ListProducts spans with context canceled by client",
+              "change_context: recommendationservice deploy changed catalog client timeout from 5s to 300ms"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.467,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 8,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "ingester-flush-interval-oom",
+          "prediction": {
+            "first_failing_service": "platform-api",
+            "causal_component": "metric-ingester",
+            "root_cause_type": "code_fault",
+            "remediation": "scale",
+            "confidence": "high",
+            "evidence": [
+              "metric_query_p95_ms > 2000ms for 5m (platform-api)",
+              "metric query timeout: upstream metric-ingester unresponsive (query-svc)",
+              "dashboard metric query failed: upstream timeout (platform-api)",
+              "flush cycle skipped: buffer not due (metric-ingester)",
+              "points_flushed_per_min dropped from 779.85 to 100.15 (metric-ingester)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "metric-ingester",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.672,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "inventory-connection-pool-exhaustion",
+          "prediction": {
+            "first_failing_service": "inventoryservice",
+            "causal_component": "inventoryservice",
+            "root_cause_type": "db_pool_exhaustion",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "inventoryservice DB pool acquire wait p99 above 0.5s (critical alert)",
+              "inventoryservice db_pool_wait_seconds_p99 metric spiked to 9.8s (alert observed)",
+              "inventoryservice db_pool_in_use metric dropped from 11.9 to 10.8 (anomaly)",
+              "inventoryservice db_pool_max_conns metric stayed at 50 (anomaly)",
+              "540 log entries: pgx pool: context deadline exceeded acquiring connection (pool exhausted) in inventoryservice"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "inventoryservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.62,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 4,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "logging-debug-disk-fill",
+          "prediction": {
+            "first_failing_service": "logging-agent",
+            "causal_component": "logging-agent",
+            "root_cause_type": "disk_space_exhausted",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "disk_used_pct metric exceeded 90% threshold at 2026-06-22T10:25:00Z",
+              "write_error_count increased to 50 from baseline 0",
+              "log_write_throughput_lps spiked to 11252.5 LPS",
+              "multiple log-agent errors: 'no space left on device' and 'filesystem mounted read-only'",
+              "ingest-gateway buffer usage increased to 76% from baseline 9.945%"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "logging-agent",
+            "expected_remediation": "config-revert"
+          },
+          "error": null,
+          "duration_seconds": 3.672,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 6,
+            "logs": 7,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "metric-ingestor-metadata-deser",
+          "prediction": {
+            "first_failing_service": "metric-ingestor-1",
+            "causal_component": "metric-ingestor-1",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "metric-ingestor-1 failing to deserialize metric envelopes (deserialize_error_ratio: 0.97)",
+              "queue metric-ingestor-1-iq backlog rising (ApproximateAgeOfOldestMessage: 900s)",
+              "failed to deserialize metric envelope: missing required field 'meta' (22 errors)",
+              "metric-ingestor-1-iq ApproximateAgeOfOldestMessage rising (8 warnings)",
+              "metric-ingestor-1 version v2026.06.24-1057 deployed at 2026-06-24T10:57:00Z with change: #ingest Tidy metric decoder construction"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "metric-ingestor-1",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.992,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 2,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "noisy-neighbor-node-saturation",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "recommendationservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: recommendationservice http_server_duration_p99_ms exceeded 500ms at 2026-06-20T13:48:00Z",
+              "metric_anomalies: recommendationservice container_cpu_cfs_throttled_seconds increased from baseline (0.023 -> 0.036) at 2026-06-20T14:05:00Z",
+              "log_patterns: ranking handler exceeded soft latency budget (cpu contended) in recommendationservice at 2026-06-20T13:42:00Z",
+              "representative_error_logs: recommendationservice timeout errors from frontend and checkoutservice starting at 2026-06-20T13:52:00Z",
+              "representative_traces: frontend and checkoutservice traces show recommendationservice latency spikes (1500ms) at 2026-06-20T13:52:00Z"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "reschedule"
+          },
+          "error": null,
+          "duration_seconds": 5.783,
+          "evidence_counts": {
+            "metrics": 11,
+            "log_patterns": 6,
+            "logs": 6,
+            "traces": 6,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "notification-buffer-oom-silent",
+          "prediction": {
+            "first_failing_service": "workflow-engine",
+            "causal_component": "notification-svc",
+            "root_cause_type": "external_dependency_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "notification-svc is failing to dispatch notifications (connection refused) from workflow-engine",
+              "platform-api reports user notification enqueue failures due to upstream unavailable",
+              "notification-svc container restarts increased from baseline (7.0 vs 0.0)",
+              "notification-svc dispatch queue depth spiked to 109861.3",
+              "workflow-engine notification dispatch error ratio spiked to 0.862"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "notification-svc",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.776,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 8,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "olapdb-tso-cas-retry-budget",
+          "prediction": {
+            "first_failing_service": "stream-taskmanager",
+            "causal_component": "olapdb-tso",
+            "root_cause_type": "capacity",
+            "remediation": "scale",
+            "confidence": "high",
+            "evidence": [
+              "FlinkJobUnhealthy on Metric_threshold_monitoring_job (stream-taskmanager taskmanager); upstream olapdb-tso FoundationDB transaction timeouts during TSO leader-election",
+              "olapdb-tso: fdb_txn_timeout_total increased to 72.0 (from baseline 0.0)",
+              "olapdb-tso: tso_cas_retry_exhausted_total increased to 48.0 (from baseline 0.0)",
+              "stream-taskmanager: flink_job_uptime_seconds dropped to 0.0 (from baseline 3600.0)",
+              "olapdb-tso: FoundationDB transaction timeout during TSO leader-election; CAS operation failed (retry budget exhausted)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "olapdb-tso",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.052,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 5,
+            "logs": 7,
+            "traces": 4,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "orders-index-migration-drift",
+          "prediction": {
+            "first_failing_service": "orders-api",
+            "causal_component": "orders-api",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "orders-api orders_latency_p99_ms > 1200ms for 10m",
+              "order listing query scanning far more rows than expected; latency degraded",
+              "order listing latency creeping above baseline as result set grows",
+              "order-history page timeout: upstream orders-api exceeded deadline",
+              "db_rows_examined increased from baseline (170229.3 -> 1724505.05)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "orders-api",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.328,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 10,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "payment-nil-deref-panic",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "paymentservice panic: runtime error: invalid memory address or nil pointer dereference (318 logs)",
+              "checkoutservice reports payment call failed: upstream 500 from paymentservice (142 logs)",
+              "paymentservice error rate 5xx ratio spiked to 71% (critical alert at 10:25:00Z)",
+              "paymentservice panic count increased to 23 (last timestamp 10:32:00Z)",
+              "checkoutservice error rate 5xx ratio spiked to 43.45% (relative change +209%)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.67,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 2
+          }
+        },
+        {
+          "scenario": "payment-refund-poison-batch",
+          "prediction": {
+            "first_failing_service": "payment-refund-svc",
+            "causal_component": "payment-refund-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "first_failing_service: payment-refund-svc (2026-07-22T11:02:00Z error: invalid currency code \"XBT\")",
+              "causal_component: payment-refund-svc (2026-07-22T11:02:00Z error: invalid currency code \"XBT\")",
+              "root_cause_type: code_fault (invalid currency code handling in payment-refund-svc)",
+              "remediation: rollback (payment-refund-svc commit e788f668d1eb072434ea1181187b16856adf09f2 introduced invalid currency code handling)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "payment-refund-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 5.704,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "recommendation-memory-leak",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "recommendationservice",
+            "root_cause_type": "memory_leak",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "OOMKilled: container exceeded memory limit 512Mi (3 times)",
+              "GC pause 480ms; heap growing, forced GC did not reclaim",
+              "recommendation rail failed to render: upstream unavailable (84 times)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.004,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "search-mapping-query-break",
+          "prediction": {
+            "first_failing_service": "searchservice",
+            "causal_component": "searchservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "searchservice query error rate spiked to 94.6% at 2026-06-18T15:06:00Z (critical alert)",
+              "searchservice has 7100+ log entries with 'no mapping found for field [title]' and 'parse_exception: unknown field [title]'",
+              "frontend shows 980 errors due to upstream searchservice failures",
+              "recommendationservice has 540 warnings about searchservice errors",
+              "searchservice's http_server_duration_p99_ms dropped to 46.5ms (likely due to failed queries being retried or bypassed)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "searchservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.357,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 6,
+            "logs": 5,
+            "traces": 6,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "session-cache-clockskew",
+          "prediction": {
+            "first_failing_service": "auth-gw",
+            "causal_component": "session-cache",
+            "root_cause_type": "cache",
+            "remediation": "roll-forward",
+            "confidence": "high",
+            "evidence": [
+              "session lookup slow: falling back to primary store (auth-gw)",
+              "login failed: session validation timeout (frontend)",
+              "cache miss; evicted key required origin re-fetch (session-cache)",
+              "cache hit ratio dropped from 96% to 55% (session-cache)",
+              "session_lookup_error_ratio increased from 0.3% to 16% (auth-gw)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "session-cache",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.739,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 11,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "shared-config-pool-drain",
+          "prediction": {
+            "first_failing_service": "checkoutservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "checkoutservice charge_latency_p99_ms breached 2000ms at 2026-07-20T09:50:00Z",
+              "paymentservice db_conn_wait_ms spiked to 2850ms at 2026-07-20T10:30:00Z",
+              "checkoutservice checkout_error_ratio increased to 20.3% at 2026-07-20T10:30:00Z",
+              "paymentservice db conn acquire failed: context deadline exceeded at 2026-07-20T09:35:00Z",
+              "checkoutservice charge rpc slow: upstream took 2900ms at 2026-07-20T09:37:00Z"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.397,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "tls-cert-expiry",
+          "prediction": {
+            "first_failing_service": "orderservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "certificate_expired",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "alert: orderservice outbound calls to paymentservice failing above 5% for 3m with TLS handshake errors due to expired certificate (paymentservice leaf cert notAfter: 2026-06-18T15:04:00Z)",
+              "metric: paymentservice tls_cert_seconds_until_expiry shows incident_median=-2700 (expired by 2700 seconds)",
+              "log: representative traces show frontend -> checkoutservice -> orderservice chain failing with TLS errors at 2026-06-18T15:04:08Z",
+              "change: orderservice deploy at 2026-06-18T15:03:40Z introduced new payment client using httpx library (not directly related to certificate expiration)",
+              "no recent external service outages"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "orderservice",
+            "expected_remediation": "rotate-cert"
+          },
+          "error": null,
+          "duration_seconds": 5.4,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 8,
+            "logs": 6,
+            "traces": 20,
+            "deploys": 5
+          }
+        },
+        {
+          "scenario": "traffic-surge-flash-sale",
+          "prediction": {
+            "first_failing_service": "frontend",
+            "causal_component": "frontend",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: frontend p99 latency above 800ms for 3m",
+              "metric: http_5xx_per_sec increased from 0.3 to 44.45",
+              "metric: request_queue_depth increased from 1.25 to 115.2",
+              "log: worker pool saturated, request queued",
+              "log: request rejected: server overloaded, shedding load"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "frontend",
+            "expected_remediation": "scale"
+          },
+          "error": null,
+          "duration_seconds": 3.891,
+          "evidence_counts": {
+            "metrics": 18,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 8,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "transformer-dependency-startup-crash",
+          "prediction": {
+            "first_failing_service": "pipeline-transformer",
+            "causal_component": "pipeline-transformer",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: pipeline-transformer in CrashLoopBackOff; startup panic loading protobuf runtime: version conflict (proto: duplicate registration / incompatible runtime)",
+              "metric_anomaly: pipeline-transformer pod_restart_total increased from baseline 0.0 to 9.0",
+              "log_pattern: panic: proto: duplicate registration / incompatible protobuf runtime version",
+              "representative_error_log: pipeline-transformer failed to start (CrashLoopBackOff) due to protobuf version conflict",
+              "change_context: pipeline-transformer deploy with commit defc5b01691d1f6eaa8544cf812715552dc9e1da updated go module pins from v1.50.0 to v1.53.0 of aws-sdk-go, which caused protobuf runtime version conflict"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "pipeline-transformer",
+            "expected_remediation": "config-revert"
+          },
+          "error": null,
+          "duration_seconds": 4.35,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 2,
+            "deploys": 1
+          }
+        },
+        {
+          "scenario": "unbounded-query-delayed-onset",
+          "prediction": {
+            "first_failing_service": "searchservice",
+            "causal_component": "searchservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "slow query: SELECT ... FROM search_events took 490ms (2026-06-21T09:40:00Z)",
+              "slow query: SELECT ... FROM search_events took 590ms (2026-06-21T10:00:00Z)",
+              "slow query: SELECT ... FROM search_events took 690ms (2026-06-21T10:20:00Z)",
+              "slow query: SELECT ... FROM search_events took 740ms (2026-06-21T10:30:00Z)",
+              "slow query: SELECT ... FROM search_events took 770ms (2026-06-21T10:36:00Z)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "searchservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.161,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 4,
+            "logs": 9,
+            "traces": 5,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "upstream-payment-provider-outage",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "stripe",
+            "root_cause_type": "external_dependency",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "alert: paymentservice charge error rate above 5% for 3m",
+              "metric_anomalies: paymentservice charge_error_rate_pct incident_median 0.6",
+              "log_patterns: POST https://api.stripe.com/v1/charges returned 503",
+              "representative_error_logs: POST https://api.stripe.com/v1/charges exceeded deadline",
+              "representative_traces: HTTP POST api.stripe.com/v1/charges (retry 1) status 503"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "failover"
+          },
+          "error": null,
+          "duration_seconds": 3.875,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 10,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "webhook-keepalive-default-flip",
+          "prediction": {
+            "first_failing_service": "webhook-dispatcher",
+            "causal_component": "webhook-dispatcher",
+            "root_cause_type": "network",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "webhook post failed: connect: cannot assign requested address",
+              "TLS certificate renews in <N> days warning",
+              "connection pool warmup retries exceeded <N> times",
+              "disk usage above <N>% on scratch volume"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "webhook-dispatcher",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.097,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 9,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 12
+          }
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "case_count": 32,
+      "first_failing_service_accuracy": 0.8125,
+      "remediation_accuracy": 0.5,
+      "error_count": 0,
+      "duration_seconds": 138.016,
+      "details": [
+        {
+          "scenario": "ai-agent-registration-missing",
+          "prediction": {
+            "first_failing_service": "ai-agent-svc",
+            "causal_component": "ai-agent-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "ai-agent-svc returning HTTP 500 on agent lookups; 'thread-title-determiner' not found in org-scoped registry (alert)",
+              "predefined internal agent lookup failed: 'thread-title-determiner' not found (org-scoped) (log)",
+              "context builder aborted: upstream ai-agent-svc returned 500 on getPredefinedAgent (log)",
+              "ai-agent-svc commit 7b8e1c4a9d2f3e6b0c5a8f1d7e4b2c9a6f3d0e1b changed predefined-agent lookup handler to add scope: \"org\" (deploy)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "ai-agent-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 4.113,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "auth-jwt-validation-regression",
+          "prediction": {
+            "first_failing_service": "gatewayservice",
+            "causal_component": "gatewayservice",
+            "root_cause_type": "token expiration",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "alert: gatewayservice 401 unauthorized ratio above 5%",
+              "metric_anomalies: token_validation_errors_per_sec spiked to 491.0",
+              "log_patterns: jwt validation failed: token is expired in gatewayservice",
+              "representative_error_logs: jwt validation failed: token is expired starting at 2026-09-14T10:12:00Z",
+              "representative_traces: multiple 401 errors in gatewayservice with token validation failures"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "gatewayservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.753,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 7,
+            "logs": 5,
+            "traces": 11,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "bad-data-poison-record",
+          "prediction": {
+            "first_failing_service": "event-enricher-1",
+            "causal_component": "event-enricher-1",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "record validation error: field 'lat' out of range [-90,90] got 412.700000 record_id=geo-evt-8f3a2174 partition=3 offset=148820291 producer=geo-partner-feed",
+              "geo-events-iq ApproximateAgeOfOldestMessage rising; consumer redelivering same offset 148820291",
+              "enriched <N> geo records from geo-events-iq; committed offset",
+              "event-enricher-1 failing to validate geo records from geo-events-iq; queue geo-events-iq backlog rising (ApproximateAgeOfOldestMessage)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "event-enricher-1",
+            "expected_remediation": "purge-bad-data"
+          },
+          "error": null,
+          "duration_seconds": 4.411,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "cache-ttl-stampede",
+          "prediction": {
+            "first_failing_service": "productdb",
+            "causal_component": "catalogservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "productdb CPU sustained above 85% (critical alert at 2026-07-11T13:46:00Z)",
+              "productdb query p99 elevated from 9.8ms to 133.3ms (incident_median at 2026-07-11T14:05:00Z)",
+              "productdb queries per second increased from 156.45 to 692.1 (incident_median at 2026-07-11T14:05:00Z)",
+              "catalogservice cache hit ratio dropped from 0.9714 to 0.561 (incident_median at 2026-07-11T14:05:00Z)",
+              "catalogservice cache miss events increased by 474 (delta_vs_baseline at 2026-07-11T14:05:00Z) with read-through to productdb"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "productdb",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 6.554,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 7,
+            "logs": 3,
+            "traces": 8,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "checkout-latency-n-plus-one",
+          "prediction": {
+            "first_failing_service": "checkoutservice",
+            "causal_component": "checkoutservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "checkoutservice p99 latency above 800ms for 3m (alert)",
+              "checkoutservice db_query_count_per_request increased from 2.95 to 3.8 (metric_anomaly)",
+              "checkoutservice slow request: PlaceOrder exceeded 3000ms (log)",
+              "checkoutservice timeout budget exceeded in cartservice (log)",
+              "checkoutservice commit v2026.06.18-1501 (deploy) with refactor to add catalog item lookup"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "checkoutservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.573,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 5,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "cloud-region-impairment",
+          "prediction": {
+            "first_failing_service": "mediaservice",
+            "causal_component": "aws.s3",
+            "root_cause_type": "external_dependency",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "S3 error rate in us-east-1 increased from baseline (0.002) to 0.3427 (mediaservice) and 0.2125 (catalogservice) starting at 2026-06-20T13:46:11Z",
+              "AWS Health Dashboard shows S3 us-east-1 degraded starting at 2026-06-20T13:46:00Z with 503 SlowDown/ServiceUnavailable",
+              "mediaservice logs show 612 GetObject failures with 503 and 388 retries with SlowDown",
+              "frontend shows 233 errors due to mediaservice 503",
+              "S3 client config changes in mediaservice (timeout increased from 3s to 5s, retries from 3 to 4) but not the root cause"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "mediaservice",
+            "expected_remediation": "failover"
+          },
+          "error": null,
+          "duration_seconds": 5.493,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 6,
+            "logs": 7,
+            "traces": 6,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "config-fanout-sampled-traces",
+          "prediction": {
+            "first_failing_service": "dashboard-svc",
+            "causal_component": "pipeline-transformer",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "dashboard-svc dashboard_data_lag_s > 300s for 10m (alert)",
+              "dashboard render failed: pipeline data stale (log)",
+              "config resolution slow: batch deadline exceeded (log)",
+              "pipeline-transformer batch process latency increased (metric_anomalies)",
+              "config-svc rpc queue saturated (log)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": true,
+            "expected_first_failing_service": "pipeline-transformer",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.171,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 11,
+            "logs": 3,
+            "traces": 6,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "dashboard-db-schema-missing-table",
+          "prediction": {
+            "first_failing_service": "dashboard-svc",
+            "causal_component": "dashboard-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "sqlalchemy.exc.ProgrammingError: relation \"dashboard_favorites\" does not exist",
+              "db_missing_table_errors_total increased from baseline",
+              "dashboard-svc returning 500s with sqlalchemy errors",
+              "dashboard-svc deployed new code that added favorites endpoint without table migration"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "dashboard-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 2.366,
+          "evidence_counts": {
+            "metrics": 2,
+            "log_patterns": 2,
+            "logs": 1,
+            "traces": 2,
+            "deploys": 2
+          }
+        },
+        {
+          "scenario": "dns-resolver-degradation",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "coredns",
+            "root_cause_type": "dns_resolution_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "paymentservice outbound call error ratio above 5% (alert)",
+              "coredns reporting elevated SERVFAIL (external_status)",
+              "multiple services failing to resolve DNS (representative_traces)",
+              "coredns forward plugin degraded (external_status)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "escalate-upstream"
+          },
+          "error": null,
+          "duration_seconds": 3.166,
+          "evidence_counts": {
+            "metrics": 12,
+            "log_patterns": 9,
+            "logs": 13,
+            "traces": 6,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "dynamodb-write-capacity-breach",
+          "prediction": {
+            "first_failing_service": "ai-memory-svc",
+            "causal_component": "ai-memory-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "DynamoDB ProvisionedThroughputExceededException on table memory-store",
+              "single-item PutItem to memory-store (batching disabled)",
+              "ai-memory-svc returned 503 for memory persist"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "ai-memory-svc",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 2.636,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 4,
+            "logs": 3,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "frontend-race-condition-5xx",
+          "prediction": {
+            "first_failing_service": "frontend",
+            "causal_component": "frontend",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: frontend 5xx error rate above 2% for 3m",
+              "metric: requests_per_sec increased from 700.55 to 1442.95 (1.06x) with frontend",
+              "log: fatal error: concurrent map writes (173 events) in frontend",
+              "trace: multiple frontend POST /api/checkout requests with 500/502 errors",
+              "change: frontend v2026.06.18-1501 deploy (15:01:40) introduced checkout handler refactor with potential race condition"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "frontend",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.663,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 9,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "grpc-deadline-too-tight",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "productcatalogservice",
+            "root_cause_type": "external_dependency_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "alert: recommendationservice rpc_client_error_rate above 2% for 3m",
+              "metric_anomaly: productcatalogservice rpc_server_cancelled_rate increased by 277x",
+              "log_pattern: catalog Fetch failed: rpc error: code = DeadlineExceeded",
+              "trace: productcatalogservice ListProducts spans with context canceled by client",
+              "change_context: recommendationservice deploy changed catalog client timeout from 5s to 300ms"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.179,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 8,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "ingester-flush-interval-oom",
+          "prediction": {
+            "first_failing_service": "platform-api",
+            "causal_component": "metric-ingester",
+            "root_cause_type": "code_fault",
+            "remediation": "scale",
+            "confidence": "high",
+            "evidence": [
+              "metric_query_p95_ms > 2000ms for 5m (platform-api)",
+              "metric query timeout: upstream metric-ingester unresponsive (query-svc)",
+              "dashboard metric query failed: upstream timeout (platform-api)",
+              "flush cycle skipped: buffer not due (metric-ingester)",
+              "points_flushed_per_min dropped from 779.85 to 100.15 (metric-ingester)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "metric-ingester",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.652,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "inventory-connection-pool-exhaustion",
+          "prediction": {
+            "first_failing_service": "inventoryservice",
+            "causal_component": "inventoryservice",
+            "root_cause_type": "db_pool_exhaustion",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "inventoryservice DB pool acquire wait p99 above 0.5s (critical alert)",
+              "inventoryservice db_pool_wait_seconds_p99 metric spiked to 9.8s (alert observed)",
+              "inventoryservice db_pool_in_use metric dropped from 11.9 to 10.8 (anomaly)",
+              "inventoryservice db_pool_max_conns metric stayed at 50 (anomaly)",
+              "540 log entries: pgx pool: context deadline exceeded acquiring connection (pool exhausted) in inventoryservice"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "inventoryservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.426,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 4,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "logging-debug-disk-fill",
+          "prediction": {
+            "first_failing_service": "logging-agent",
+            "causal_component": "logging-agent",
+            "root_cause_type": "disk_space_exhausted",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "disk_used_pct metric exceeded 90% threshold at 2026-06-22T10:25:00Z",
+              "write_error_count increased to 50 from baseline 0",
+              "log_write_throughput_lps spiked to 11252.5 LPS",
+              "multiple log-agent errors: 'no space left on device' and 'filesystem mounted read-only'",
+              "ingest-gateway buffer usage increased to 76% from baseline 9.945%"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "logging-agent",
+            "expected_remediation": "config-revert"
+          },
+          "error": null,
+          "duration_seconds": 4.557,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 6,
+            "logs": 7,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "metric-ingestor-metadata-deser",
+          "prediction": {
+            "first_failing_service": "metric-ingestor-1",
+            "causal_component": "metric-ingestor-1",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "metric-ingestor-1 failing to deserialize metric envelopes (deserialize_error_ratio: 0.97)",
+              "queue metric-ingestor-1-iq backlog rising (ApproximateAgeOfOldestMessage: 900s)",
+              "failed to deserialize metric envelope: missing required field 'meta' (22 errors)",
+              "metric-ingestor-1-iq ApproximateAgeOfOldestMessage rising (8 warnings)",
+              "metric-ingestor-1 version v2026.06.24-1057 deployed at 2026-06-24T10:57:00Z with change: #ingest Tidy metric decoder construction"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "metric-ingestor-1",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.369,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 2,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "noisy-neighbor-node-saturation",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "recommendationservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: recommendationservice http_server_duration_p99_ms exceeded 500ms at 2026-06-20T13:48:00Z",
+              "metric_anomalies: recommendationservice container_cpu_cfs_throttled_seconds increased from baseline (0.023 -> 0.036) at 2026-06-20T14:05:00Z",
+              "log_patterns: ranking handler exceeded soft latency budget (cpu contended) in recommendationservice at 2026-06-20T13:42:00Z",
+              "representative_error_logs: recommendationservice timeout errors from frontend and checkoutservice starting at 2026-06-20T13:52:00Z",
+              "representative_traces: frontend and checkoutservice traces show recommendationservice latency spikes (1500ms) at 2026-06-20T13:52:00Z"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "reschedule"
+          },
+          "error": null,
+          "duration_seconds": 6.317,
+          "evidence_counts": {
+            "metrics": 11,
+            "log_patterns": 6,
+            "logs": 6,
+            "traces": 6,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "notification-buffer-oom-silent",
+          "prediction": {
+            "first_failing_service": "workflow-engine",
+            "causal_component": "notification-svc",
+            "root_cause_type": "external_dependency_failure",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "notification-svc is failing to dispatch notifications (connection refused) from workflow-engine",
+              "platform-api reports user notification enqueue failures due to upstream unavailable",
+              "notification-svc container restarts increased from baseline (7.0 vs 0.0)",
+              "notification-svc dispatch queue depth spiked to 109861.3",
+              "workflow-engine notification dispatch error ratio spiked to 0.862"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "notification-svc",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.517,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 8,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "olapdb-tso-cas-retry-budget",
+          "prediction": {
+            "first_failing_service": "stream-taskmanager",
+            "causal_component": "olapdb-tso",
+            "root_cause_type": "capacity",
+            "remediation": "scale",
+            "confidence": "high",
+            "evidence": [
+              "FlinkJobUnhealthy on Metric_threshold_monitoring_job (stream-taskmanager taskmanager); upstream olapdb-tso FoundationDB transaction timeouts during TSO leader-election",
+              "olapdb-tso: fdb_txn_timeout_total increased to 72.0 (from baseline 0.0)",
+              "olapdb-tso: tso_cas_retry_exhausted_total increased to 48.0 (from baseline 0.0)",
+              "stream-taskmanager: flink_job_uptime_seconds dropped to 0.0 (from baseline 3600.0)",
+              "olapdb-tso: FoundationDB transaction timeout during TSO leader-election; CAS operation failed (retry budget exhausted)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "olapdb-tso",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.444,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 5,
+            "logs": 7,
+            "traces": 4,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "orders-index-migration-drift",
+          "prediction": {
+            "first_failing_service": "orders-api",
+            "causal_component": "orders-api",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "orders-api orders_latency_p99_ms > 1200ms for 10m",
+              "order listing query scanning far more rows than expected; latency degraded",
+              "order listing latency creeping above baseline as result set grows",
+              "order-history page timeout: upstream orders-api exceeded deadline",
+              "db_rows_examined increased from baseline (170229.3 -> 1724505.05)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "orders-api",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.944,
+          "evidence_counts": {
+            "metrics": 7,
+            "log_patterns": 10,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "payment-nil-deref-panic",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "paymentservice panic: runtime error: invalid memory address or nil pointer dereference (318 logs)",
+              "checkoutservice reports payment call failed: upstream 500 from paymentservice (142 logs)",
+              "paymentservice error rate 5xx ratio spiked to 71% (critical alert at 10:25:00Z)",
+              "paymentservice panic count increased to 23 (last timestamp 10:32:00Z)",
+              "checkoutservice error rate 5xx ratio spiked to 43.45% (relative change +209%)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.645,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 3,
+            "deploys": 2
+          }
+        },
+        {
+          "scenario": "payment-refund-poison-batch",
+          "prediction": {
+            "first_failing_service": "payment-refund-svc",
+            "causal_component": "payment-refund-svc",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "first_failing_service: payment-refund-svc (2026-07-22T11:02:00Z error: invalid currency code \"XBT\")",
+              "causal_component: payment-refund-svc (2026-07-22T11:02:00Z error: invalid currency code \"XBT\")",
+              "root_cause_type: code_fault (invalid currency code handling in payment-refund-svc)",
+              "remediation: rollback (payment-refund-svc commit e788f668d1eb072434ea1181187b16856adf09f2 introduced invalid currency code handling)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "payment-refund-svc",
+            "expected_remediation": "roll-forward"
+          },
+          "error": null,
+          "duration_seconds": 5.14,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "recommendation-memory-leak",
+          "prediction": {
+            "first_failing_service": "recommendationservice",
+            "causal_component": "recommendationservice",
+            "root_cause_type": "memory_leak",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "OOMKilled: container exceeded memory limit 512Mi (3 times)",
+              "GC pause 480ms; heap growing, forced GC did not reclaim",
+              "recommendation rail failed to render: upstream unavailable (84 times)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "recommendationservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 2.568,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 3,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "search-mapping-query-break",
+          "prediction": {
+            "first_failing_service": "searchservice",
+            "causal_component": "searchservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "searchservice query error rate spiked to 94.6% at 2026-06-18T15:06:00Z (critical alert)",
+              "searchservice has 7100+ log entries with 'no mapping found for field [title]' and 'parse_exception: unknown field [title]'",
+              "frontend shows 980 errors due to upstream searchservice failures",
+              "recommendationservice has 540 warnings about searchservice errors",
+              "searchservice's http_server_duration_p99_ms dropped to 46.5ms (likely due to failed queries being retried or bypassed)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "searchservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.232,
+          "evidence_counts": {
+            "metrics": 5,
+            "log_patterns": 6,
+            "logs": 5,
+            "traces": 6,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "session-cache-clockskew",
+          "prediction": {
+            "first_failing_service": "auth-gw",
+            "causal_component": "session-cache",
+            "root_cause_type": "cache",
+            "remediation": "roll-forward",
+            "confidence": "high",
+            "evidence": [
+              "session lookup slow: falling back to primary store (auth-gw)",
+              "login failed: session validation timeout (frontend)",
+              "cache miss; evicted key required origin re-fetch (session-cache)",
+              "cache hit ratio dropped from 96% to 55% (session-cache)",
+              "session_lookup_error_ratio increased from 0.3% to 16% (auth-gw)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": false,
+            "expected_first_failing_service": "session-cache",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.677,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 11,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "shared-config-pool-drain",
+          "prediction": {
+            "first_failing_service": "checkoutservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "checkoutservice charge_latency_p99_ms breached 2000ms at 2026-07-20T09:50:00Z",
+              "paymentservice db_conn_wait_ms spiked to 2850ms at 2026-07-20T10:30:00Z",
+              "checkoutservice checkout_error_ratio increased to 20.3% at 2026-07-20T10:30:00Z",
+              "paymentservice db conn acquire failed: context deadline exceeded at 2026-07-20T09:35:00Z",
+              "checkoutservice charge rpc slow: upstream took 2900ms at 2026-07-20T09:37:00Z"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": false,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 5.763,
+          "evidence_counts": {
+            "metrics": 6,
+            "log_patterns": 9,
+            "logs": 3,
+            "traces": 20,
+            "deploys": 12
+          }
+        },
+        {
+          "scenario": "tls-cert-expiry",
+          "prediction": {
+            "first_failing_service": "orderservice",
+            "causal_component": "paymentservice",
+            "root_cause_type": "certificate_expired",
+            "remediation": "rotate-cert",
+            "confidence": "high",
+            "evidence": [
+              "alert: orderservice outbound calls to paymentservice failing above 5% for 3m with TLS handshake errors due to expired certificate (paymentservice leaf cert notAfter: 2026-06-18T15:04:00Z)",
+              "metric: paymentservice tls_cert_seconds_until_expiry shows incident_median=-2700 (expired by 2700 seconds)",
+              "log: representative traces show frontend -> checkoutservice -> orderservice chain failing with TLS errors at 2026-06-18T15:04:08Z",
+              "change: orderservice deploy at 2026-06-18T15:03:40Z introduced new payment client using httpx library (not directly related to certificate expiration)",
+              "no recent external service outages"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "orderservice",
+            "expected_remediation": "rotate-cert"
+          },
+          "error": null,
+          "duration_seconds": 5.168,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 8,
+            "logs": 6,
+            "traces": 20,
+            "deploys": 5
+          }
+        },
+        {
+          "scenario": "traffic-surge-flash-sale",
+          "prediction": {
+            "first_failing_service": "frontend",
+            "causal_component": "frontend",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: frontend p99 latency above 800ms for 3m",
+              "metric: http_5xx_per_sec increased from 0.3 to 44.45",
+              "metric: request_queue_depth increased from 1.25 to 115.2",
+              "log: worker pool saturated, request queued",
+              "log: request rejected: server overloaded, shedding load"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "frontend",
+            "expected_remediation": "scale"
+          },
+          "error": null,
+          "duration_seconds": 3.646,
+          "evidence_counts": {
+            "metrics": 18,
+            "log_patterns": 6,
+            "logs": 4,
+            "traces": 8,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "transformer-dependency-startup-crash",
+          "prediction": {
+            "first_failing_service": "pipeline-transformer",
+            "causal_component": "pipeline-transformer",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "alert: pipeline-transformer in CrashLoopBackOff; startup panic loading protobuf runtime: version conflict (proto: duplicate registration / incompatible runtime)",
+              "metric_anomaly: pipeline-transformer pod_restart_total increased from baseline 0.0 to 9.0",
+              "log_pattern: panic: proto: duplicate registration / incompatible protobuf runtime version",
+              "representative_error_log: pipeline-transformer failed to start (CrashLoopBackOff) due to protobuf version conflict",
+              "change_context: pipeline-transformer deploy with commit defc5b01691d1f6eaa8544cf812715552dc9e1da updated go module pins from v1.50.0 to v1.53.0 of aws-sdk-go, which caused protobuf runtime version conflict"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "pipeline-transformer",
+            "expected_remediation": "config-revert"
+          },
+          "error": null,
+          "duration_seconds": 3.968,
+          "evidence_counts": {
+            "metrics": 3,
+            "log_patterns": 3,
+            "logs": 2,
+            "traces": 2,
+            "deploys": 1
+          }
+        },
+        {
+          "scenario": "unbounded-query-delayed-onset",
+          "prediction": {
+            "first_failing_service": "searchservice",
+            "causal_component": "searchservice",
+            "root_cause_type": "code_fault",
+            "remediation": "rollback",
+            "confidence": "high",
+            "evidence": [
+              "slow query: SELECT ... FROM search_events took 490ms (2026-06-21T09:40:00Z)",
+              "slow query: SELECT ... FROM search_events took 590ms (2026-06-21T10:00:00Z)",
+              "slow query: SELECT ... FROM search_events took 690ms (2026-06-21T10:20:00Z)",
+              "slow query: SELECT ... FROM search_events took 740ms (2026-06-21T10:30:00Z)",
+              "slow query: SELECT ... FROM search_events took 770ms (2026-06-21T10:36:00Z)"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "searchservice",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 4.905,
+          "evidence_counts": {
+            "metrics": 4,
+            "log_patterns": 4,
+            "logs": 9,
+            "traces": 5,
+            "deploys": 3
+          }
+        },
+        {
+          "scenario": "upstream-payment-provider-outage",
+          "prediction": {
+            "first_failing_service": "paymentservice",
+            "causal_component": "stripe",
+            "root_cause_type": "external_dependency",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "alert: paymentservice charge error rate above 5% for 3m",
+              "metric_anomalies: paymentservice charge_error_rate_pct incident_median 0.6",
+              "log_patterns: POST https://api.stripe.com/v1/charges returned 503",
+              "representative_error_logs: POST https://api.stripe.com/v1/charges exceeded deadline",
+              "representative_traces: HTTP POST api.stripe.com/v1/charges (retry 1) status 503"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": true,
+            "expected_first_failing_service": "paymentservice",
+            "expected_remediation": "failover"
+          },
+          "error": null,
+          "duration_seconds": 3.771,
+          "evidence_counts": {
+            "metrics": 8,
+            "log_patterns": 5,
+            "logs": 3,
+            "traces": 10,
+            "deploys": 4
+          }
+        },
+        {
+          "scenario": "webhook-keepalive-default-flip",
+          "prediction": {
+            "first_failing_service": "webhook-dispatcher",
+            "causal_component": "webhook-dispatcher",
+            "root_cause_type": "network",
+            "remediation": "failover",
+            "confidence": "high",
+            "evidence": [
+              "webhook post failed: connect: cannot assign requested address",
+              "TLS certificate renews in <N> days warning",
+              "connection pool warmup retries exceeded <N> times",
+              "disk usage above <N>% on scratch volume"
+            ]
+          },
+          "scores": {
+            "first_failing_service_correct": true,
+            "remediation_correct": false,
+            "expected_first_failing_service": "webhook-dispatcher",
+            "expected_remediation": "rollback"
+          },
+          "error": null,
+          "duration_seconds": 3.229,
+          "evidence_counts": {
+            "metrics": 9,
+            "log_patterns": 9,
+            "logs": 2,
+            "traces": 20,
+            "deploys": 12
+          }
+        }
+      ]
+    }
+  ],
+  "details": [
+    {
+      "scenario": "ai-agent-registration-missing",
+      "prediction": {
+        "first_failing_service": "ai-agent-svc",
+        "causal_component": "ai-agent-svc",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "ai-agent-svc returning HTTP 500 on agent lookups; 'thread-title-determiner' not found in org-scoped registry (alert)",
+          "predefined internal agent lookup failed: 'thread-title-determiner' not found (org-scoped) (log)",
+          "context builder aborted: upstream ai-agent-svc returned 500 on getPredefinedAgent (log)",
+          "ai-agent-svc commit 7b8e1c4a9d2f3e6b0c5a8f1d7e4b2c9a6f3d0e1b changed predefined-agent lookup handler to add scope: \"org\" (deploy)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "ai-agent-svc",
+        "expected_remediation": "roll-forward"
+      },
+      "error": null,
+      "duration_seconds": 4.113,
+      "evidence_counts": {
+        "metrics": 3,
+        "log_patterns": 3,
+        "logs": 2,
+        "traces": 3,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "auth-jwt-validation-regression",
+      "prediction": {
+        "first_failing_service": "gatewayservice",
+        "causal_component": "gatewayservice",
+        "root_cause_type": "token expiration",
+        "remediation": "rotate-cert",
+        "confidence": "high",
+        "evidence": [
+          "alert: gatewayservice 401 unauthorized ratio above 5%",
+          "metric_anomalies: token_validation_errors_per_sec spiked to 491.0",
+          "log_patterns: jwt validation failed: token is expired in gatewayservice",
+          "representative_error_logs: jwt validation failed: token is expired starting at 2026-09-14T10:12:00Z",
+          "representative_traces: multiple 401 errors in gatewayservice with token validation failures"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "gatewayservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 4.753,
+      "evidence_counts": {
+        "metrics": 9,
+        "log_patterns": 7,
+        "logs": 5,
+        "traces": 11,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "bad-data-poison-record",
+      "prediction": {
+        "first_failing_service": "event-enricher-1",
+        "causal_component": "event-enricher-1",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "record validation error: field 'lat' out of range [-90,90] got 412.700000 record_id=geo-evt-8f3a2174 partition=3 offset=148820291 producer=geo-partner-feed",
+          "geo-events-iq ApproximateAgeOfOldestMessage rising; consumer redelivering same offset 148820291",
+          "enriched <N> geo records from geo-events-iq; committed offset",
+          "event-enricher-1 failing to validate geo records from geo-events-iq; queue geo-events-iq backlog rising (ApproximateAgeOfOldestMessage)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "event-enricher-1",
+        "expected_remediation": "purge-bad-data"
+      },
+      "error": null,
+      "duration_seconds": 4.411,
+      "evidence_counts": {
+        "metrics": 3,
+        "log_patterns": 3,
+        "logs": 2,
+        "traces": 3,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "cache-ttl-stampede",
+      "prediction": {
+        "first_failing_service": "productdb",
+        "causal_component": "catalogservice",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "productdb CPU sustained above 85% (critical alert at 2026-07-11T13:46:00Z)",
+          "productdb query p99 elevated from 9.8ms to 133.3ms (incident_median at 2026-07-11T14:05:00Z)",
+          "productdb queries per second increased from 156.45 to 692.1 (incident_median at 2026-07-11T14:05:00Z)",
+          "catalogservice cache hit ratio dropped from 0.9714 to 0.561 (incident_median at 2026-07-11T14:05:00Z)",
+          "catalogservice cache miss events increased by 474 (delta_vs_baseline at 2026-07-11T14:05:00Z) with read-through to productdb"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "productdb",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 6.554,
+      "evidence_counts": {
+        "metrics": 6,
+        "log_patterns": 7,
+        "logs": 3,
+        "traces": 8,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "checkout-latency-n-plus-one",
+      "prediction": {
+        "first_failing_service": "checkoutservice",
+        "causal_component": "checkoutservice",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "checkoutservice p99 latency above 800ms for 3m (alert)",
+          "checkoutservice db_query_count_per_request increased from 2.95 to 3.8 (metric_anomaly)",
+          "checkoutservice slow request: PlaceOrder exceeded 3000ms (log)",
+          "checkoutservice timeout budget exceeded in cartservice (log)",
+          "checkoutservice commit v2026.06.18-1501 (deploy) with refactor to add catalog item lookup"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "checkoutservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 3.573,
+      "evidence_counts": {
+        "metrics": 6,
+        "log_patterns": 5,
+        "logs": 2,
+        "traces": 20,
+        "deploys": 4
+      }
+    },
+    {
+      "scenario": "cloud-region-impairment",
+      "prediction": {
+        "first_failing_service": "mediaservice",
+        "causal_component": "aws.s3",
+        "root_cause_type": "external_dependency",
+        "remediation": "failover",
+        "confidence": "high",
+        "evidence": [
+          "S3 error rate in us-east-1 increased from baseline (0.002) to 0.3427 (mediaservice) and 0.2125 (catalogservice) starting at 2026-06-20T13:46:11Z",
+          "AWS Health Dashboard shows S3 us-east-1 degraded starting at 2026-06-20T13:46:00Z with 503 SlowDown/ServiceUnavailable",
+          "mediaservice logs show 612 GetObject failures with 503 and 388 retries with SlowDown",
+          "frontend shows 233 errors due to mediaservice 503",
+          "S3 client config changes in mediaservice (timeout increased from 3s to 5s, retries from 3 to 4) but not the root cause"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "mediaservice",
+        "expected_remediation": "failover"
+      },
+      "error": null,
+      "duration_seconds": 5.493,
+      "evidence_counts": {
+        "metrics": 7,
+        "log_patterns": 6,
+        "logs": 7,
+        "traces": 6,
+        "deploys": 4
+      }
+    },
+    {
+      "scenario": "config-fanout-sampled-traces",
+      "prediction": {
+        "first_failing_service": "dashboard-svc",
+        "causal_component": "pipeline-transformer",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "dashboard-svc dashboard_data_lag_s > 300s for 10m (alert)",
+          "dashboard render failed: pipeline data stale (log)",
+          "config resolution slow: batch deadline exceeded (log)",
+          "pipeline-transformer batch process latency increased (metric_anomalies)",
+          "config-svc rpc queue saturated (log)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": false,
+        "remediation_correct": true,
+        "expected_first_failing_service": "pipeline-transformer",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 3.171,
+      "evidence_counts": {
+        "metrics": 7,
+        "log_patterns": 11,
+        "logs": 3,
+        "traces": 6,
+        "deploys": 12
+      }
+    },
+    {
+      "scenario": "dashboard-db-schema-missing-table",
+      "prediction": {
+        "first_failing_service": "dashboard-svc",
+        "causal_component": "dashboard-svc",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "sqlalchemy.exc.ProgrammingError: relation \"dashboard_favorites\" does not exist",
+          "db_missing_table_errors_total increased from baseline",
+          "dashboard-svc returning 500s with sqlalchemy errors",
+          "dashboard-svc deployed new code that added favorites endpoint without table migration"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "dashboard-svc",
+        "expected_remediation": "roll-forward"
+      },
+      "error": null,
+      "duration_seconds": 2.366,
+      "evidence_counts": {
+        "metrics": 2,
+        "log_patterns": 2,
+        "logs": 1,
+        "traces": 2,
+        "deploys": 2
+      }
+    },
+    {
+      "scenario": "dns-resolver-degradation",
+      "prediction": {
+        "first_failing_service": "paymentservice",
+        "causal_component": "coredns",
+        "root_cause_type": "dns_resolution_failure",
+        "remediation": "failover",
+        "confidence": "high",
+        "evidence": [
+          "paymentservice outbound call error ratio above 5% (alert)",
+          "coredns reporting elevated SERVFAIL (external_status)",
+          "multiple services failing to resolve DNS (representative_traces)",
+          "coredns forward plugin degraded (external_status)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "paymentservice",
+        "expected_remediation": "escalate-upstream"
+      },
+      "error": null,
+      "duration_seconds": 3.166,
+      "evidence_counts": {
+        "metrics": 12,
+        "log_patterns": 9,
+        "logs": 13,
+        "traces": 6,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "dynamodb-write-capacity-breach",
+      "prediction": {
+        "first_failing_service": "ai-memory-svc",
+        "causal_component": "ai-memory-svc",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "DynamoDB ProvisionedThroughputExceededException on table memory-store",
+          "single-item PutItem to memory-store (batching disabled)",
+          "ai-memory-svc returned 503 for memory persist"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "ai-memory-svc",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 2.636,
+      "evidence_counts": {
+        "metrics": 3,
+        "log_patterns": 4,
+        "logs": 3,
+        "traces": 3,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "frontend-race-condition-5xx",
+      "prediction": {
+        "first_failing_service": "frontend",
+        "causal_component": "frontend",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "alert: frontend 5xx error rate above 2% for 3m",
+          "metric: requests_per_sec increased from 700.55 to 1442.95 (1.06x) with frontend",
+          "log: fatal error: concurrent map writes (173 events) in frontend",
+          "trace: multiple frontend POST /api/checkout requests with 500/502 errors",
+          "change: frontend v2026.06.18-1501 deploy (15:01:40) introduced checkout handler refactor with potential race condition"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "frontend",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 5.663,
+      "evidence_counts": {
+        "metrics": 7,
+        "log_patterns": 6,
+        "logs": 4,
+        "traces": 9,
+        "deploys": 4
+      }
+    },
+    {
+      "scenario": "grpc-deadline-too-tight",
+      "prediction": {
+        "first_failing_service": "recommendationservice",
+        "causal_component": "productcatalogservice",
+        "root_cause_type": "external_dependency_failure",
+        "remediation": "failover",
+        "confidence": "high",
+        "evidence": [
+          "alert: recommendationservice rpc_client_error_rate above 2% for 3m",
+          "metric_anomaly: productcatalogservice rpc_server_cancelled_rate increased by 277x",
+          "log_pattern: catalog Fetch failed: rpc error: code = DeadlineExceeded",
+          "trace: productcatalogservice ListProducts spans with context canceled by client",
+          "change_context: recommendationservice deploy changed catalog client timeout from 5s to 300ms"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "recommendationservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 4.179,
+      "evidence_counts": {
+        "metrics": 6,
+        "log_patterns": 5,
+        "logs": 3,
+        "traces": 8,
+        "deploys": 4
+      }
+    },
+    {
+      "scenario": "ingester-flush-interval-oom",
+      "prediction": {
+        "first_failing_service": "platform-api",
+        "causal_component": "metric-ingester",
+        "root_cause_type": "code_fault",
+        "remediation": "scale",
+        "confidence": "high",
+        "evidence": [
+          "metric_query_p95_ms > 2000ms for 5m (platform-api)",
+          "metric query timeout: upstream metric-ingester unresponsive (query-svc)",
+          "dashboard metric query failed: upstream timeout (platform-api)",
+          "flush cycle skipped: buffer not due (metric-ingester)",
+          "points_flushed_per_min dropped from 779.85 to 100.15 (metric-ingester)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": false,
+        "remediation_correct": false,
+        "expected_first_failing_service": "metric-ingester",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 5.652,
+      "evidence_counts": {
+        "metrics": 8,
+        "log_patterns": 9,
+        "logs": 3,
+        "traces": 20,
+        "deploys": 12
+      }
+    },
+    {
+      "scenario": "inventory-connection-pool-exhaustion",
+      "prediction": {
+        "first_failing_service": "inventoryservice",
+        "causal_component": "inventoryservice",
+        "root_cause_type": "db_pool_exhaustion",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "inventoryservice DB pool acquire wait p99 above 0.5s (critical alert)",
+          "inventoryservice db_pool_wait_seconds_p99 metric spiked to 9.8s (alert observed)",
+          "inventoryservice db_pool_in_use metric dropped from 11.9 to 10.8 (anomaly)",
+          "inventoryservice db_pool_max_conns metric stayed at 50 (anomaly)",
+          "540 log entries: pgx pool: context deadline exceeded acquiring connection (pool exhausted) in inventoryservice"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "inventoryservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 5.426,
+      "evidence_counts": {
+        "metrics": 6,
+        "log_patterns": 6,
+        "logs": 4,
+        "traces": 4,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "logging-debug-disk-fill",
+      "prediction": {
+        "first_failing_service": "logging-agent",
+        "causal_component": "logging-agent",
+        "root_cause_type": "disk_space_exhausted",
+        "remediation": "rotate-cert",
+        "confidence": "high",
+        "evidence": [
+          "disk_used_pct metric exceeded 90% threshold at 2026-06-22T10:25:00Z",
+          "write_error_count increased to 50 from baseline 0",
+          "log_write_throughput_lps spiked to 11252.5 LPS",
+          "multiple log-agent errors: 'no space left on device' and 'filesystem mounted read-only'",
+          "ingest-gateway buffer usage increased to 76% from baseline 9.945%"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "logging-agent",
+        "expected_remediation": "config-revert"
+      },
+      "error": null,
+      "duration_seconds": 4.557,
+      "evidence_counts": {
+        "metrics": 5,
+        "log_patterns": 6,
+        "logs": 7,
+        "traces": 3,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "metric-ingestor-metadata-deser",
+      "prediction": {
+        "first_failing_service": "metric-ingestor-1",
+        "causal_component": "metric-ingestor-1",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "metric-ingestor-1 failing to deserialize metric envelopes (deserialize_error_ratio: 0.97)",
+          "queue metric-ingestor-1-iq backlog rising (ApproximateAgeOfOldestMessage: 900s)",
+          "failed to deserialize metric envelope: missing required field 'meta' (22 errors)",
+          "metric-ingestor-1-iq ApproximateAgeOfOldestMessage rising (8 warnings)",
+          "metric-ingestor-1 version v2026.06.24-1057 deployed at 2026-06-24T10:57:00Z with change: #ingest Tidy metric decoder construction"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "metric-ingestor-1",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 4.369,
+      "evidence_counts": {
+        "metrics": 3,
+        "log_patterns": 3,
+        "logs": 2,
+        "traces": 2,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "noisy-neighbor-node-saturation",
+      "prediction": {
+        "first_failing_service": "recommendationservice",
+        "causal_component": "recommendationservice",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "alert: recommendationservice http_server_duration_p99_ms exceeded 500ms at 2026-06-20T13:48:00Z",
+          "metric_anomalies: recommendationservice container_cpu_cfs_throttled_seconds increased from baseline (0.023 -> 0.036) at 2026-06-20T14:05:00Z",
+          "log_patterns: ranking handler exceeded soft latency budget (cpu contended) in recommendationservice at 2026-06-20T13:42:00Z",
+          "representative_error_logs: recommendationservice timeout errors from frontend and checkoutservice starting at 2026-06-20T13:52:00Z",
+          "representative_traces: frontend and checkoutservice traces show recommendationservice latency spikes (1500ms) at 2026-06-20T13:52:00Z"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "recommendationservice",
+        "expected_remediation": "reschedule"
+      },
+      "error": null,
+      "duration_seconds": 6.317,
+      "evidence_counts": {
+        "metrics": 11,
+        "log_patterns": 6,
+        "logs": 6,
+        "traces": 6,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "notification-buffer-oom-silent",
+      "prediction": {
+        "first_failing_service": "workflow-engine",
+        "causal_component": "notification-svc",
+        "root_cause_type": "external_dependency_failure",
+        "remediation": "failover",
+        "confidence": "high",
+        "evidence": [
+          "notification-svc is failing to dispatch notifications (connection refused) from workflow-engine",
+          "platform-api reports user notification enqueue failures due to upstream unavailable",
+          "notification-svc container restarts increased from baseline (7.0 vs 0.0)",
+          "notification-svc dispatch queue depth spiked to 109861.3",
+          "workflow-engine notification dispatch error ratio spiked to 0.862"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": false,
+        "remediation_correct": false,
+        "expected_first_failing_service": "notification-svc",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 3.517,
+      "evidence_counts": {
+        "metrics": 6,
+        "log_patterns": 8,
+        "logs": 2,
+        "traces": 20,
+        "deploys": 12
+      }
+    },
+    {
+      "scenario": "olapdb-tso-cas-retry-budget",
+      "prediction": {
+        "first_failing_service": "stream-taskmanager",
+        "causal_component": "olapdb-tso",
+        "root_cause_type": "capacity",
+        "remediation": "scale",
+        "confidence": "high",
+        "evidence": [
+          "FlinkJobUnhealthy on Metric_threshold_monitoring_job (stream-taskmanager taskmanager); upstream olapdb-tso FoundationDB transaction timeouts during TSO leader-election",
+          "olapdb-tso: fdb_txn_timeout_total increased to 72.0 (from baseline 0.0)",
+          "olapdb-tso: tso_cas_retry_exhausted_total increased to 48.0 (from baseline 0.0)",
+          "stream-taskmanager: flink_job_uptime_seconds dropped to 0.0 (from baseline 3600.0)",
+          "olapdb-tso: FoundationDB transaction timeout during TSO leader-election; CAS operation failed (retry budget exhausted)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": false,
+        "remediation_correct": false,
+        "expected_first_failing_service": "olapdb-tso",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 4.444,
+      "evidence_counts": {
+        "metrics": 4,
+        "log_patterns": 5,
+        "logs": 7,
+        "traces": 4,
+        "deploys": 4
+      }
+    },
+    {
+      "scenario": "orders-index-migration-drift",
+      "prediction": {
+        "first_failing_service": "orders-api",
+        "causal_component": "orders-api",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "orders-api orders_latency_p99_ms > 1200ms for 10m",
+          "order listing query scanning far more rows than expected; latency degraded",
+          "order listing latency creeping above baseline as result set grows",
+          "order-history page timeout: upstream orders-api exceeded deadline",
+          "db_rows_examined increased from baseline (170229.3 -> 1724505.05)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "orders-api",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 3.944,
+      "evidence_counts": {
+        "metrics": 7,
+        "log_patterns": 10,
+        "logs": 3,
+        "traces": 20,
+        "deploys": 12
+      }
+    },
+    {
+      "scenario": "payment-nil-deref-panic",
+      "prediction": {
+        "first_failing_service": "paymentservice",
+        "causal_component": "paymentservice",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "paymentservice panic: runtime error: invalid memory address or nil pointer dereference (318 logs)",
+          "checkoutservice reports payment call failed: upstream 500 from paymentservice (142 logs)",
+          "paymentservice error rate 5xx ratio spiked to 71% (critical alert at 10:25:00Z)",
+          "paymentservice panic count increased to 23 (last timestamp 10:32:00Z)",
+          "checkoutservice error rate 5xx ratio spiked to 43.45% (relative change +209%)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "paymentservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 3.645,
+      "evidence_counts": {
+        "metrics": 4,
+        "log_patterns": 3,
+        "logs": 2,
+        "traces": 3,
+        "deploys": 2
+      }
+    },
+    {
+      "scenario": "payment-refund-poison-batch",
+      "prediction": {
+        "first_failing_service": "payment-refund-svc",
+        "causal_component": "payment-refund-svc",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "first_failing_service: payment-refund-svc (2026-07-22T11:02:00Z error: invalid currency code \"XBT\")",
+          "causal_component: payment-refund-svc (2026-07-22T11:02:00Z error: invalid currency code \"XBT\")",
+          "root_cause_type: code_fault (invalid currency code handling in payment-refund-svc)",
+          "remediation: rollback (payment-refund-svc commit e788f668d1eb072434ea1181187b16856adf09f2 introduced invalid currency code handling)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "payment-refund-svc",
+        "expected_remediation": "roll-forward"
+      },
+      "error": null,
+      "duration_seconds": 5.14,
+      "evidence_counts": {
+        "metrics": 4,
+        "log_patterns": 9,
+        "logs": 3,
+        "traces": 20,
+        "deploys": 12
+      }
+    },
+    {
+      "scenario": "recommendation-memory-leak",
+      "prediction": {
+        "first_failing_service": "recommendationservice",
+        "causal_component": "recommendationservice",
+        "root_cause_type": "memory_leak",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "OOMKilled: container exceeded memory limit 512Mi (3 times)",
+          "GC pause 480ms; heap growing, forced GC did not reclaim",
+          "recommendation rail failed to render: upstream unavailable (84 times)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "recommendationservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 2.568,
+      "evidence_counts": {
+        "metrics": 5,
+        "log_patterns": 5,
+        "logs": 3,
+        "traces": 3,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "search-mapping-query-break",
+      "prediction": {
+        "first_failing_service": "searchservice",
+        "causal_component": "searchservice",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "searchservice query error rate spiked to 94.6% at 2026-06-18T15:06:00Z (critical alert)",
+          "searchservice has 7100+ log entries with 'no mapping found for field [title]' and 'parse_exception: unknown field [title]'",
+          "frontend shows 980 errors due to upstream searchservice failures",
+          "recommendationservice has 540 warnings about searchservice errors",
+          "searchservice's http_server_duration_p99_ms dropped to 46.5ms (likely due to failed queries being retried or bypassed)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "searchservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 4.232,
+      "evidence_counts": {
+        "metrics": 5,
+        "log_patterns": 6,
+        "logs": 5,
+        "traces": 6,
+        "deploys": 4
+      }
+    },
+    {
+      "scenario": "session-cache-clockskew",
+      "prediction": {
+        "first_failing_service": "auth-gw",
+        "causal_component": "session-cache",
+        "root_cause_type": "cache",
+        "remediation": "roll-forward",
+        "confidence": "high",
+        "evidence": [
+          "session lookup slow: falling back to primary store (auth-gw)",
+          "login failed: session validation timeout (frontend)",
+          "cache miss; evicted key required origin re-fetch (session-cache)",
+          "cache hit ratio dropped from 96% to 55% (session-cache)",
+          "session_lookup_error_ratio increased from 0.3% to 16% (auth-gw)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": false,
+        "remediation_correct": false,
+        "expected_first_failing_service": "session-cache",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 3.677,
+      "evidence_counts": {
+        "metrics": 8,
+        "log_patterns": 11,
+        "logs": 3,
+        "traces": 20,
+        "deploys": 12
+      }
+    },
+    {
+      "scenario": "shared-config-pool-drain",
+      "prediction": {
+        "first_failing_service": "checkoutservice",
+        "causal_component": "paymentservice",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "checkoutservice charge_latency_p99_ms breached 2000ms at 2026-07-20T09:50:00Z",
+          "paymentservice db_conn_wait_ms spiked to 2850ms at 2026-07-20T10:30:00Z",
+          "checkoutservice checkout_error_ratio increased to 20.3% at 2026-07-20T10:30:00Z",
+          "paymentservice db conn acquire failed: context deadline exceeded at 2026-07-20T09:35:00Z",
+          "checkoutservice charge rpc slow: upstream took 2900ms at 2026-07-20T09:37:00Z"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": false,
+        "remediation_correct": true,
+        "expected_first_failing_service": "paymentservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 5.763,
+      "evidence_counts": {
+        "metrics": 6,
+        "log_patterns": 9,
+        "logs": 3,
+        "traces": 20,
+        "deploys": 12
+      }
+    },
+    {
+      "scenario": "tls-cert-expiry",
+      "prediction": {
+        "first_failing_service": "orderservice",
+        "causal_component": "paymentservice",
+        "root_cause_type": "certificate_expired",
+        "remediation": "rotate-cert",
+        "confidence": "high",
+        "evidence": [
+          "alert: orderservice outbound calls to paymentservice failing above 5% for 3m with TLS handshake errors due to expired certificate (paymentservice leaf cert notAfter: 2026-06-18T15:04:00Z)",
+          "metric: paymentservice tls_cert_seconds_until_expiry shows incident_median=-2700 (expired by 2700 seconds)",
+          "log: representative traces show frontend -> checkoutservice -> orderservice chain failing with TLS errors at 2026-06-18T15:04:08Z",
+          "change: orderservice deploy at 2026-06-18T15:03:40Z introduced new payment client using httpx library (not directly related to certificate expiration)",
+          "no recent external service outages"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "orderservice",
+        "expected_remediation": "rotate-cert"
+      },
+      "error": null,
+      "duration_seconds": 5.168,
+      "evidence_counts": {
+        "metrics": 9,
+        "log_patterns": 8,
+        "logs": 6,
+        "traces": 20,
+        "deploys": 5
+      }
+    },
+    {
+      "scenario": "traffic-surge-flash-sale",
+      "prediction": {
+        "first_failing_service": "frontend",
+        "causal_component": "frontend",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "alert: frontend p99 latency above 800ms for 3m",
+          "metric: http_5xx_per_sec increased from 0.3 to 44.45",
+          "metric: request_queue_depth increased from 1.25 to 115.2",
+          "log: worker pool saturated, request queued",
+          "log: request rejected: server overloaded, shedding load"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "frontend",
+        "expected_remediation": "scale"
+      },
+      "error": null,
+      "duration_seconds": 3.646,
+      "evidence_counts": {
+        "metrics": 18,
+        "log_patterns": 6,
+        "logs": 4,
+        "traces": 8,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "transformer-dependency-startup-crash",
+      "prediction": {
+        "first_failing_service": "pipeline-transformer",
+        "causal_component": "pipeline-transformer",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "alert: pipeline-transformer in CrashLoopBackOff; startup panic loading protobuf runtime: version conflict (proto: duplicate registration / incompatible runtime)",
+          "metric_anomaly: pipeline-transformer pod_restart_total increased from baseline 0.0 to 9.0",
+          "log_pattern: panic: proto: duplicate registration / incompatible protobuf runtime version",
+          "representative_error_log: pipeline-transformer failed to start (CrashLoopBackOff) due to protobuf version conflict",
+          "change_context: pipeline-transformer deploy with commit defc5b01691d1f6eaa8544cf812715552dc9e1da updated go module pins from v1.50.0 to v1.53.0 of aws-sdk-go, which caused protobuf runtime version conflict"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "pipeline-transformer",
+        "expected_remediation": "config-revert"
+      },
+      "error": null,
+      "duration_seconds": 3.968,
+      "evidence_counts": {
+        "metrics": 3,
+        "log_patterns": 3,
+        "logs": 2,
+        "traces": 2,
+        "deploys": 1
+      }
+    },
+    {
+      "scenario": "unbounded-query-delayed-onset",
+      "prediction": {
+        "first_failing_service": "searchservice",
+        "causal_component": "searchservice",
+        "root_cause_type": "code_fault",
+        "remediation": "rollback",
+        "confidence": "high",
+        "evidence": [
+          "slow query: SELECT ... FROM search_events took 490ms (2026-06-21T09:40:00Z)",
+          "slow query: SELECT ... FROM search_events took 590ms (2026-06-21T10:00:00Z)",
+          "slow query: SELECT ... FROM search_events took 690ms (2026-06-21T10:20:00Z)",
+          "slow query: SELECT ... FROM search_events took 740ms (2026-06-21T10:30:00Z)",
+          "slow query: SELECT ... FROM search_events took 770ms (2026-06-21T10:36:00Z)"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "searchservice",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 4.905,
+      "evidence_counts": {
+        "metrics": 4,
+        "log_patterns": 4,
+        "logs": 9,
+        "traces": 5,
+        "deploys": 3
+      }
+    },
+    {
+      "scenario": "upstream-payment-provider-outage",
+      "prediction": {
+        "first_failing_service": "paymentservice",
+        "causal_component": "stripe",
+        "root_cause_type": "external_dependency",
+        "remediation": "failover",
+        "confidence": "high",
+        "evidence": [
+          "alert: paymentservice charge error rate above 5% for 3m",
+          "metric_anomalies: paymentservice charge_error_rate_pct incident_median 0.6",
+          "log_patterns: POST https://api.stripe.com/v1/charges returned 503",
+          "representative_error_logs: POST https://api.stripe.com/v1/charges exceeded deadline",
+          "representative_traces: HTTP POST api.stripe.com/v1/charges (retry 1) status 503"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": true,
+        "expected_first_failing_service": "paymentservice",
+        "expected_remediation": "failover"
+      },
+      "error": null,
+      "duration_seconds": 3.771,
+      "evidence_counts": {
+        "metrics": 8,
+        "log_patterns": 5,
+        "logs": 3,
+        "traces": 10,
+        "deploys": 4
+      }
+    },
+    {
+      "scenario": "webhook-keepalive-default-flip",
+      "prediction": {
+        "first_failing_service": "webhook-dispatcher",
+        "causal_component": "webhook-dispatcher",
+        "root_cause_type": "network",
+        "remediation": "failover",
+        "confidence": "high",
+        "evidence": [
+          "webhook post failed: connect: cannot assign requested address",
+          "TLS certificate renews in <N> days warning",
+          "connection pool warmup retries exceeded <N> times",
+          "disk usage above <N>% on scratch volume"
+        ]
+      },
+      "scores": {
+        "first_failing_service_correct": true,
+        "remediation_correct": false,
+        "expected_first_failing_service": "webhook-dispatcher",
+        "expected_remediation": "rollback"
+      },
+      "error": null,
+      "duration_seconds": 3.229,
+      "evidence_counts": {
+        "metrics": 9,
+        "log_patterns": 9,
+        "logs": 2,
+        "traces": 20,
+        "deploys": 12
+      }
+    }
+  ],
+  "scope_warning": "本地保留的公开32场景子集；评测根因服务与处置类型，不等同于 RootCauseBench 官方完整排行榜成绩。"
+}

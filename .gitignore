@@ -1,0 +1,29 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.egg-info/
+data/*.db
+data/*.db-*
+data/ollama.log
+data/uploads/*
+!data/uploads/.gitkeep
+data/model_cache/
+htmlcov/
+.coverage
+
+# Local runtime and evaluation scratch files
+tmp/
+*.checkpoint.json
+
+# Private source material and resume artifacts
+REQUIREMENTS.md
+docs/RESUME_COMPARISON.md
+resume_*/
+resume_source.wps
+resume_reference.docx
+简历_*.docx
+~$*.docx
+scripts/build_optimized_resume.py
+scripts/extract_legacy_word.py
