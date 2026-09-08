@@ -9,8 +9,8 @@ from mcp.server.fastmcp import FastMCP
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 mcp = FastMCP(
-    "oncall-mock-ops",
-    instructions="只读的本地 OnCall 演示工具，通过 MCP stdio 暴露告警、指标和脱敏日志。",
+    "trace2root-mock-ops",
+    instructions="Trace2Root 只读本地演示工具，通过 MCP stdio 暴露告警、指标和脱敏日志。",
     log_level="ERROR",
 )
 

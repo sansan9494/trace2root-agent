@@ -168,7 +168,7 @@ class ConversationAgent:
             for hit in result.get("data", {}).get("hits", []):
                 sources.append(f"{hit['title']} [{hit['chunk_id']}]: {hit['content'][:260]}")
         if not results:
-            fallback = "这是一个轻量 OnCall Agent。请指定服务、环境或希望查询的告警、指标、日志或知识手册。"
+            fallback = "这是 Trace2Root 迹因智能体。请指定服务、环境或希望查询的告警、指标、日志或知识手册。"
         elif all(not item["result"]["success"] for item in results):
             fallback = "查询工具均未成功，无法形成可靠结论。请检查依赖状态后重试。"
         elif any(item["name"] == "query_internal_docs" and not item["result"]["data"].get("hits") for item in results):

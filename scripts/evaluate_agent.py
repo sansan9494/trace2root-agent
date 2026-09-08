@@ -28,9 +28,9 @@ async def wait_for_task(client: Any, task_id: str) -> dict[str, Any]:
 async def main() -> None:
     output = ROOT / "evaluation" / "results" / "latest_agent.json"
     output.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix="oncall-agent-eval-") as runtime:
+    with tempfile.TemporaryDirectory(prefix="trace2root-agent-eval-") as runtime:
         runtime_path = Path(runtime)
-        os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{runtime_path / 'oncall.db'}"
+        os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{runtime_path / 'trace2root.db'}"
         os.environ["VECTOR_DB_URI"] = str(runtime_path / "milvus.db")
         os.environ["UPLOAD_DIR"] = str(runtime_path / "uploads")
         os.environ["LLM_PROVIDER"] = "deterministic"

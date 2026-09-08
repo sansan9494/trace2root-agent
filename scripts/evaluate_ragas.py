@@ -84,7 +84,7 @@ async def main() -> None:
         contexts = [item["content"] for item in hits]
         fallback = "现有检索证据不足，需由值班工程师继续核查。"
         answer = await answer_model.generate(
-            "你是 OnCall 知识助手。只能依据给定上下文，用中文简洁回答并指出高风险操作需要审批；证据不足时明确说明。",
+            "你是 Trace2Root 知识助手。只能依据给定上下文，用中文简洁回答并指出高风险操作需要审批；证据不足时明确说明。",
             f"问题：{case['query']}\n上下文：{json.dumps(contexts, ensure_ascii=False)}",
             fallback,
         )

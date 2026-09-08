@@ -1,1 +1,1 @@
-"""Lightweight OnCall Agent backend."""
+"""Trace2Root Agent backend."""

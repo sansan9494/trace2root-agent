@@ -20,16 +20,16 @@ def check(condition: bool, message: str) -> None:
 
 
 async def main() -> None:
-    parser = argparse.ArgumentParser(description="Run reproducible OnCall robustness scenarios.")
+    parser = argparse.ArgumentParser(description="Run reproducible Trace2Root robustness scenarios.")
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--output", type=Path, default=ROOT / "evaluation" / "results" / "latest_robustness.json")
     args = parser.parse_args()
     if args.repeats < 1:
         raise SystemExit("--repeats 至少为 1")
 
-    with tempfile.TemporaryDirectory(prefix="oncall-robustness-") as runtime:
+    with tempfile.TemporaryDirectory(prefix="trace2root-robustness-") as runtime:
         runtime_path = Path(runtime)
-        os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{runtime_path / 'oncall.db'}"
+        os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{runtime_path / 'trace2root.db'}"
         os.environ["VECTOR_DB_URI"] = str(runtime_path / "milvus.db")
         os.environ["UPLOAD_DIR"] = str(runtime_path / "uploads")
         os.environ["MODEL_CACHE_DIR"] = str(runtime_path / "models")

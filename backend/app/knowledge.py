@@ -332,7 +332,7 @@ class RerankerProvider:
 
 
 class MilvusLiteStore:
-    collection = "oncall_chunks"
+    collection = "trace2root_chunks"
 
     def __init__(self, settings: Settings, embeddings: EmbeddingProvider):
         self.settings = settings
@@ -442,7 +442,7 @@ class KnowledgeService:
         if not self.settings.model_warmup:
             return
         try:
-            self.embeddings.embed_query("OnCall 模型预热")
+            self.embeddings.embed_query("Trace2Root 模型预热")
             self.reranker.rerank("模型预热", [{"chunk_id": "warmup", "content": "模型预热"}])
             self.warmup_error = None
         except Exception as exc:

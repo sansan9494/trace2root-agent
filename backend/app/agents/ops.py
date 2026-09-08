@@ -162,7 +162,7 @@ class OperationsAgent:
         task.status, task.started_at = "planning", utcnow()
         fallback = self._fallback_plan(state["alert"], state["goal"])
         raw = await self.model.generate_json(
-            "你是OnCall调查Planner。根据告警、目标和工具目录提出有界的结构化调查计划。优先只读证据；不得虚构工具；不得把告警服务直接当作根因；生产写操作只有在用户目标明确要求时才能列入计划。",
+            "你是Trace2Root调查Planner。根据告警、目标和工具目录提出有界的结构化调查计划。优先只读证据；不得虚构工具；不得把告警服务直接当作根因；生产写操作只有在用户目标明确要求时才能列入计划。",
             f"告警：{json.dumps(state['alert'], ensure_ascii=False)}\n目标：{state['goal']}\n工具目录：{json.dumps(self._tool_catalog(), ensure_ascii=False)}",
             InvestigationPlanDecision.model_json_schema(), fallback, max_tokens=900,
         )
@@ -247,7 +247,7 @@ class OperationsAgent:
         fallback = self._fallback_replan(state, plan)
         evidence_view = [{"step_id": item["step_id"], "tool_name": item["tool_name"], "success": item["result"]["success"], "summary": item["result"]["summary"], "data": json.dumps(item["result"].get("data", {}), ensure_ascii=False)[:1800]} for item in state.get("evidence", [])[-6:]]
         raw = await self.model.generate_json(
-            "你是OnCall Replanner。观察工具结果后，只能选择continue、revise、finish或need_human。证据冲突时不得给高置信结论；工具失败不等于系统正常；新增步骤只能使用给定工具目录。",
+            "你是Trace2Root Replanner。观察工具结果后，只能选择continue、revise、finish或need_human。证据冲突时不得给高置信结论；工具失败不等于系统正常；新增步骤只能使用给定工具目录。",
             f"目标：{state['goal']}\n告警：{json.dumps(state['alert'], ensure_ascii=False)}\n当前计划：{json.dumps(plan.model_dump(mode='json'), ensure_ascii=False)}\n观察：{json.dumps(evidence_view, ensure_ascii=False)}\n工具目录：{json.dumps(self._tool_catalog(), ensure_ascii=False)}",
             ReplanProposal.model_json_schema(), fallback, max_tokens=700,
         )
@@ -360,7 +360,7 @@ class OperationsAgent:
         evidence, fallback = state.get("evidence", []), self._fallback_analysis(state)
         evidence_view = [{"tool_name": item["tool_name"], "success": item["result"]["success"], "summary": item["result"]["summary"], "data": json.dumps(item["result"].get("data", {}), ensure_ascii=False)[:2200]} for item in evidence[-8:]]
         raw = await self.model.generate_json(
-            "你是OnCall根因分析Agent。只根据工具证据生成通用故障结论。每个候选必须分别列出支持证据和反对证据；证据冲突、工具失败或只有单一信号时不得给高置信度；不得声称已执行写操作。",
+            "你是Trace2Root根因分析Agent。只根据工具证据生成通通用故障结论。每个候选必须分别列出支持证据和反对证据；证据冲突、工具失败或只有单一信号时不得给高置信度；不得声称已执行写操作。",
             f"告警：{json.dumps(state['alert'], ensure_ascii=False)}\n目标：{state['goal']}\nReplanner决策：{json.dumps(state.get('decisions', []), ensure_ascii=False)}\n工具证据：{json.dumps(evidence_view, ensure_ascii=False)}",
             IncidentAnalysis.model_json_schema(), fallback, max_tokens=1000,
         )
@@ -399,7 +399,7 @@ class OperationsAgent:
         await state["db"].commit()
         await self._event(state, "report", {"report": report})
         if state.get("notify"):
-            result = await self.registry.execute(state["db"], "send_msg", {"channel": "mock", "target": "oncall-demo", "title": "OnCall 分析报告", "body": analysis.executive_summary, "task_id": state["task_id"]}, task_id=state["task_id"])
+            result = await self.registry.execute(state["db"], "send_msg", {"channel": "mock", "target": "trace2root-demo", "title": "Trace2Root 分析报告", "body": analysis.executive_summary, "task_id": state["task_id"]}, task_id=state["task_id"])
             await self._event(state, "notification", {"result": result.model_dump(mode="json")})
         task.status, task.finished_at = "completed", utcnow()
         await state["db"].commit()

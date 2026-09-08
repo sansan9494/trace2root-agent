@@ -105,9 +105,9 @@ async def main() -> None:
     if args.repeats < 1:
         raise SystemExit("--repeats must be at least 1")
 
-    with tempfile.TemporaryDirectory(prefix="oncall-rag-eval-") as runtime:
+    with tempfile.TemporaryDirectory(prefix="trace2root-rag-eval-") as runtime:
         runtime_path = Path(runtime)
-        os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{runtime_path / 'oncall.db'}"
+        os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{runtime_path / 'trace2root.db'}"
         os.environ["VECTOR_DB_URI"] = str(runtime_path / "milvus.db")
         os.environ["UPLOAD_DIR"] = str(runtime_path / "uploads")
 

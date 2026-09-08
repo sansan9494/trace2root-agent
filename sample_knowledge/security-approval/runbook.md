@@ -1,4 +1,4 @@
-# OnCall 工具安全与人工审批 Runbook
+# Trace2Root 工具安全与人工审批 Runbook
 
 > 本文件是项目维护的中文策略，参考 NIST SP 800-61 Rev.3 的事件响应建议及 NIST SP 800-53 Rev.5 的配置变更控制原则整理，不是 NIST 官方中文译本。
 >

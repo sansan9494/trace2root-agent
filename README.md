@@ -1,6 +1,6 @@
-# Lightweight OnCall Agent
+# Trace2Root Agent（迹因智能体）
 
-面向 8 GB 显存笔记本和 WSL2 的轻量化、可运行 OnCall Agent MVP。项目保留三个独立 Agent、向量+BM25+RRF 混合检索、ReAct 工具循环、Plan-Execute-Replan、任务持久化、SSE、审批门、可观察工具轨迹和离线评测，同时把重型外部依赖替换为本地组件和可替换 Mock 适配器。
+面向 8 GB 显存笔记本和 WSL2 的轻量化、可运行故障诊断 Agent。Trace2Root 表示从告警、指标、日志与 Trace 等运行信号沿可审计证据链追踪到根因。项目包含三个独立 Agent、向量+BM25+RRF 混合检索、ReAct 工具循环、Plan-Execute-Replan、任务持久化、SSE、审批门、可观察工具轨迹和离线评测，同时把重型外部依赖替换为本地组件和可替换 Mock 适配器。
 
 > 这是个人工程实践与可复现实验项目，不代表已经在企业生产环境落地。Prometheus、日志、告警和通知目前通过真实 MCP 协议连接本地 Mock 工具，高风险操作不会触碰真实生产环境。
 
@@ -68,7 +68,7 @@ df -h .
 在 WSL Ubuntu 终端执行，不要用 Windows Python：
 
 ```bash
-cd /path/to/lightweight-oncall-agent
+cd /path/to/trace2root-agent
 chmod +x scripts/*.sh
 ./scripts/setup.sh --full
 .venv/bin/python scripts/import_samples.py
@@ -165,8 +165,8 @@ Milvus Lite 向量 Top-K ─┐
 
 ## 数据初始化
 
-- SQLite：启动时幂等创建 `data/oncall.db`。
-- Milvus Lite：首次检查/导入时创建 `data/milvus.db` 和 `oncall_chunks` Collection。
+- SQLite：启动时幂等创建 `data/trace2root.db`。
+- Milvus Lite：首次检查/导入时创建 `data/milvus.db` 和 `trace2root_chunks` Collection。
 - 原文件：`data/uploads/`。
 - 示例知识：支付、订单、用户三个服务各有业务说明、Runbook 和历史事故。
 - 公开中文知识：Kubernetes 中文故障排查/RBAC 文档整理版，以及基于 NIST SP 800-61r3、SP 800-53r5 整理的安全审批 Runbook；原文、许可与归属保存在 `data/public_sources/`。
@@ -206,7 +206,7 @@ Milvus Lite 向量 Top-K ─┐
 ## 测试
 
 ```bash
-cd /path/to/lightweight-oncall-agent
+cd /path/to/trace2root-agent
 ./scripts/test.sh
 ```
 

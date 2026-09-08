@@ -1,4 +1,4 @@
-# 轻量化 OnCall Agent 实施计划
+# Trace2Root Agent（迹因智能体）实施计划
 
 本计划以 `REQUIREMENTS.md` 为需求基线，并应用本次轻量化约束：FastAPI、LangGraph、SQLite、Milvus Lite；不安装 Docker、Redis、PostgreSQL、Kubernetes 或完整 Prometheus；外部运维系统使用可替换 Mock 适配器。
 

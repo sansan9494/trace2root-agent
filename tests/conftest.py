@@ -8,10 +8,10 @@ import pytest_asyncio
 from asgi_lifespan import LifespanManager
 from httpx import ASGITransport, AsyncClient
 
-TEST_ROOT = Path("/tmp/oncall-agent-tests")
+TEST_ROOT = Path("/tmp/trace2root-agent-tests")
 shutil.rmtree(TEST_ROOT, ignore_errors=True)
 TEST_ROOT.mkdir(parents=True)
-os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{TEST_ROOT / 'oncall.db'}"
+os.environ["DATABASE_URL"] = f"sqlite+aiosqlite:///{TEST_ROOT / 'trace2root.db'}"
 os.environ.pop("MILVUS_URI", None)
 os.environ["VECTOR_DB_URI"] = str(TEST_ROOT / "milvus.db")
 os.environ["UPLOAD_DIR"] = str(TEST_ROOT / "uploads")

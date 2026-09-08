@@ -1,6 +1,6 @@
 # Kubernetes 应用告警排查 Runbook（公开文档整理版）
 
-> 来源：Kubernetes Authors 的中文文档，按 CC BY 4.0 使用。本文件为了 OnCall 检索进行了摘录、重组和场景化补充，并非 Kubernetes 官方原文的完整副本。
+> 来源：Kubernetes Authors 的中文文档，按 CC BY 4.0 使用。本文件为了 Trace2Root 检索进行了摘录、重组和场景化补充，并非 Kubernetes 官方原文的完整副本。
 >
 > 原始页面：
 > - https://kubernetes.io/zh-cn/docs/concepts/workloads/pods/probes/

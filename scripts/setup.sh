@@ -12,7 +12,7 @@ fi
 venv_python=".venv/bin/python"
 if ! "$venv_python" -m pip --version >/dev/null 2>&1; then
   # Ubuntu 最小安装可能生成了 venv Python 但没有 ensurepip。仅向项目 venv 引导 pip。
-  bootstrap_file="/tmp/oncall-agent-get-pip.py"
+  bootstrap_file="/tmp/trace2root-agent-get-pip.py"
   curl -fsSL https://bootstrap.pypa.io/get-pip.py -o "$bootstrap_file"
   "$venv_python" "$bootstrap_file"
 fi

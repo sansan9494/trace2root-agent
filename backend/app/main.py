@@ -97,7 +97,7 @@ async def ready(request: Request, db: AsyncSession = Depends(get_db)):
 async def metrics(db: AsyncSession = Depends(get_db)):
     tasks = await db.scalar(select(func.count()).select_from(OpsTask)) or 0
     docs = await db.scalar(select(func.count()).select_from(Document).where(Document.status == "indexed")) or 0
-    return f"# TYPE oncall_tasks_total gauge\noncall_tasks_total {tasks}\n# TYPE oncall_documents_indexed gauge\noncall_documents_indexed {docs}\n"
+    return f"# TYPE trace2root_tasks_total gauge\ntrace2root_tasks_total {tasks}\n# TYPE trace2root_documents_indexed gauge\ntrace2root_documents_indexed {docs}\n"
 
 
 @app.get("/api/v1/evaluations/latest")

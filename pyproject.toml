@@ -3,9 +3,9 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lightweight-oncall-agent"
+name = "trace2root-agent"
 version = "0.1.0"
-description = "Lightweight FastAPI/LangGraph/SQLite/Milvus Lite OnCall Agent"
+description = "Evidence-driven incident diagnosis agent with FastAPI, LangGraph, MCP, SQLite, and Milvus Lite"
 requires-python = ">=3.11"
 dependencies = [
   "fastapi>=0.115,<1",

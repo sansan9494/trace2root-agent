@@ -9,11 +9,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    app_name: str = "Lightweight OnCall Agent"
+    app_name: str = "Trace2Root Agent"
     app_host: str = "127.0.0.1"
     app_port: int = 8000
     app_log_level: str = "INFO"
-    database_url: str = "sqlite+aiosqlite:///./data/oncall.db"
+    database_url: str = "sqlite+aiosqlite:///./data/trace2root.db"
     vector_db_uri: str = "./data/milvus.db"
     upload_dir: str = "./data/uploads"
     model_cache_dir: str = "./data/model_cache"
@@ -49,7 +49,7 @@ class Settings(BaseSettings):
     rag_max_chunks_per_document: int = 2
     max_upload_mb: int = 10
     mcp_servers: str = "[]"
-    mock_notification_allowlist: str = "oncall-demo"
+    mock_notification_allowlist: str = "trace2root-demo"
 
     def ensure_directories(self) -> None:
         Path(self.upload_dir).mkdir(parents=True, exist_ok=True)
