@@ -360,7 +360,7 @@ class OperationsAgent:
         evidence, fallback = state.get("evidence", []), self._fallback_analysis(state)
         evidence_view = [{"tool_name": item["tool_name"], "success": item["result"]["success"], "summary": item["result"]["summary"], "data": json.dumps(item["result"].get("data", {}), ensure_ascii=False)[:2200]} for item in evidence[-8:]]
         raw = await self.model.generate_json(
-            "你是Trace2Root根因分析Agent。只根据工具证据生成通通用故障结论。每个候选必须分别列出支持证据和反对证据；证据冲突、工具失败或只有单一信号时不得给高置信度；不得声称已执行写操作。",
+            "你是Trace2Root根因分析Agent。只根据工具证据生成通用故障结论。每个候选必须分别列出支持证据和反对证据；证据冲突、工具失败或只有单一信号时不得给高置信度；不得声称已执行写操作。",
             f"告警：{json.dumps(state['alert'], ensure_ascii=False)}\n目标：{state['goal']}\nReplanner决策：{json.dumps(state.get('decisions', []), ensure_ascii=False)}\n工具证据：{json.dumps(evidence_view, ensure_ascii=False)}",
             IncidentAnalysis.model_json_schema(), fallback, max_tokens=1000,
         )

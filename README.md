@@ -194,6 +194,8 @@ Milvus Lite 向量 Top-K ─┐
 
 ## 六步演示
 
+面试前可先运行 `bash scripts/demo_preflight.sh`。逐分钟讲稿、不同故障场景、现场故障预案以及 HR/技术面问题答案见 [`docs/DEMO_INTERVIEW_GUIDE.md`](docs/DEMO_INTERVIEW_GUIDE.md)。
+
 1. 一键安装并导入示例知识。
 2. 启动后打开 Web 页，确认 `ready · ollama`，并在依赖状态中看到 MCP `connected`。
 3. 问“支付服务高延迟如何排查？”，查看 RAG 来源和工具。
