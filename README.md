@@ -67,6 +67,8 @@ df -h .
 
 在 WSL Ubuntu 终端执行，不要用 Windows Python：
 
+> 如果当前提示符是 `PS C:\...>`，说明仍在 Windows PowerShell。先执行 `wsl`，看到 Linux 的 `$` 提示符后再运行下面的 Bash 命令。Windows PowerShell 的脚本执行策略报错与本项目无关，不需要为本项目修改策略。
+
 ```bash
 cd /path/to/trace2root-agent
 chmod +x scripts/*.sh

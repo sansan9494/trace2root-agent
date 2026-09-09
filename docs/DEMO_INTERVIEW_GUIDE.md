@@ -28,6 +28,8 @@
 
 ## 2. 面试前 15 分钟准备
 
+> **运行环境：以下所有 Bash 命令都必须在 WSL2 Ubuntu 终端中执行，不能直接粘贴到 Windows PowerShell。** 如果当前窗口提示符是 `PS C:\...>`，先输入 `wsl`；看到类似 `ss@主机名:/mnt/c/...$` 后再执行后续命令。Web 页面仍然使用 Windows 浏览器打开。
+
 ### 设备和页面
 
 1. 笔记本接通电源，关闭游戏、视频和其他占显存程序。
@@ -38,12 +40,15 @@
 
 ### 预检
 
-进入当前项目根目录；从 GitHub 克隆后的常见目录示例如下：
+如果从 Windows PowerShell 开始，先进入 WSL，再进入当前项目目录：
 
 ```bash
-cd /path/to/trace2root-agent
+wsl
+cd /mnt/c/Users/ss/code/oncall-agent
 bash scripts/demo_preflight.sh
 ```
+
+其中 `wsl` 这一行只在 PowerShell 中执行；进入 Ubuntu 后不要再次输入。若以后重新克隆为新目录，则把路径替换为实际的 `trace2root-agent` 路径。
 
 预期：核心项显示 `[OK]`。服务未启动时出现两条 `[WARN]` 是正常的。
 
