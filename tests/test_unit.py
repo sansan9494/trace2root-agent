@@ -219,6 +219,49 @@ def test_ops_harness_supplements_small_model_underplanning():
     }
 
 
+def test_ops_harness_supplements_explicit_restart_and_normalizes_risk():
+    registry = object.__new__(ToolRegistry)
+    data_dir = Path("mock_services/data")
+    from backend.app.tools import AlarmTool, InternalDocsTool, LogsTool
+
+    registry.tools = {
+        "query_prometheus_alarm": AlarmTool(data_dir),
+        "query_metrics": MetricsTool(data_dir),
+        "query_logs": LogsTool(data_dir),
+        "query_internal_docs": InternalDocsTool(None),
+        "restart_service": RestartServiceTool(),
+    }
+    agent = OperationsAgent(Settings(_env_file=None), registry, AgentDecisionModel())
+    state = {
+        "goal": "排查支付服务高延迟，确认根因后重启支付服务",
+        "alert": {
+            "alert_name": "HighLatency", "service_name": "payment-service",
+            "environment": "production",
+        },
+    }
+    fallback = agent._fallback_plan(state["alert"], state["goal"])
+    steps, supplemented = agent._ensure_investigation_coverage([], state, fallback)
+    assert supplemented is True
+    restart = next(step for step in steps if step.tool_name == "restart_service")
+    assert restart.arguments["service_name"] == "payment-service"
+    assert restart.arguments["environment"] == "production"
+
+    from backend.app.schemas import IncidentAnalysis
+
+    analysis = IncidentAnalysis.model_validate({
+        "executive_summary": "已完成只读调查",
+        "root_causes": [{
+            "candidate": "上游超时", "confidence": "高", "basis": "指标与日志一致",
+            "supporting_evidence": ["指标19%", "日志2条"],
+            "contradicting_evidence": ["未发现直接反证"],
+        }],
+        "recommendations": [{"action": "重启支付服务", "risk_level": "L2"}],
+        "unconfirmed": [], "need_human": True,
+    })
+    agent._normalize_recommendation_risks(analysis)
+    assert analysis.recommendations[0].risk_level == "L3"
+
+
 def test_incident_candidate_evidence_schema_requires_arrays():
     from backend.app.schemas import IncidentAnalysis
 

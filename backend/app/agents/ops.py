@@ -42,6 +42,25 @@ class OperationsAgent:
     READ_ONLY_INVESTIGATION_TOOLS = {
         "query_internal_docs", "query_prometheus_alarm", "query_metrics", "query_logs",
     }
+    HIGH_RISK_RECOMMENDATION_KEYWORDS = (
+        "重启", "回滚", "删除", "扩容", "缩容", "切流", "流量切换",
+    )
+
+    @staticmethod
+    def _requests_restart(goal: str) -> bool:
+        return "重启" in goal or "restart" in goal.lower()
+
+    @classmethod
+    def _normalize_recommendation_risks(cls, analysis: IncidentAnalysis) -> None:
+        for recommendation in analysis.recommendations:
+            if (
+                recommendation.risk_level in {"L0", "L1", "L2"}
+                and any(
+                    keyword in recommendation.action
+                    for keyword in cls.HIGH_RISK_RECOMMENDATION_KEYWORDS
+                )
+            ):
+                recommendation.risk_level = "L3"
 
     def __init__(self, settings: Settings, registry: ToolRegistry, model: ChatModel):
         self.settings, self.registry, self.model = settings, registry, model
@@ -82,14 +101,14 @@ class OperationsAgent:
             {"title": "验证关键指标和依赖信号", "tool_name": "query_metrics", "arguments": {"service_name": service, "environment": env}, "success_criteria": "获得能够验证主要假设的实时指标"},
             {"title": "检查错误日志并寻找首个异常信号", "tool_name": "query_logs", "arguments": {"service_name": service, "environment": env}, "success_criteria": "获得与指标时间对齐的错误日志"},
         ]
-        if "重启" in goal:
+        if OperationsAgent._requests_restart(goal):
             steps.append({"title": "申请生产服务重启审批", "tool_name": "restart_service", "arguments": {"service_name": service, "environment": env, "reason": goal}, "success_criteria": "获得人工批准后方可进入安全演示执行"})
         return {"objective": goal, "hypotheses": ["应用自身异常", "资源或容量异常", "上游依赖异常", "近期变更引入回归"], "steps": steps}
 
     def _step_from_proposal(self, proposal: ToolStepProposal, state: OpsState, step_id: str, depends_on: list[str]) -> PlanStep | None:
         alert, goal, name = state["alert"], state["goal"], proposal.tool_name
         allowed = set(self.READ_ONLY_INVESTIGATION_TOOLS)
-        if "重启" in goal:
+        if self._requests_restart(goal):
             allowed.add("restart_service")
         if name not in allowed or name not in self.registry.tools:
             return None
@@ -146,6 +165,8 @@ class OperationsAgent:
     ) -> tuple[list[PlanStep], bool]:
         """Guarantee a minimum evidence path when a small model under-plans."""
         required = {"query_internal_docs", "query_metrics", "query_logs"}
+        if self._requests_restart(state["goal"]):
+            required.add("restart_service")
         missing = required - {step.tool_name for step in steps}
         if not missing:
             return steps, False
@@ -382,6 +403,7 @@ class OperationsAgent:
                 candidate.confidence = "低"
             if not candidate.contradicting_evidence:
                 candidate.contradicting_evidence = ["未发现与该候选直接冲突的工具证据"]
+        self._normalize_recommendation_risks(analysis)
         report = {
             "task_id": state["task_id"], "trigger_type": task.trigger_type, "created_at": task.created_at.isoformat(),
             "alert_summary": f"{state['alert']['service_name']} / {state['alert']['alert_name']} / {state['alert']['severity']}",

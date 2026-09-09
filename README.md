@@ -262,7 +262,7 @@ RCA 评测在本机必须限制为 4K 上下文，并建议以 `LLAMA_ARG_CACHE_
 
 ```text
 python -m compileall -q backend scripts mock_services -> compile-ok
-./scripts/test.sh                                  -> 34 passed, 1 warning in 44.59s
+./scripts/test.sh                                  -> 35 passed, 1 upstream warning
 .venv/bin/python scripts/evaluate_rag.py --top-k 3 -> 9 cases, vector/hybrid Recall@3=1.0
 .venv/bin/python scripts/evaluate_agent.py          -> 4/4 scenarios, unauthorized L3 execution=0
 scripts/evaluate_ragas.py --max-cases 3             -> 3/3 completed, four metrics recorded
