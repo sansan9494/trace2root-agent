@@ -12,6 +12,7 @@ data/uploads/*
 data/model_cache/
 htmlcov/
 .coverage
+dist/
 
 # Local runtime and evaluation scratch files
 tmp/

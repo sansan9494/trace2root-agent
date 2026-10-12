@@ -279,6 +279,9 @@ class OperationsAgent:
             proposal = ReplanProposal.model_validate(fallback)
             decision_source = "schema_validation_fallback"
         required_evidence_tools = {"query_internal_docs", "query_metrics", "query_logs"}
+        required_action_tools = (
+            {"restart_service"} if self._requests_restart(state["goal"]) else set()
+        )
         observed_tools_before = {
             item["tool_name"] for item in state.get("evidence", [])
         }
@@ -287,7 +290,7 @@ class OperationsAgent:
         for step in plan.steps:
             if step.step_id in proposal.skipped_step_ids and step.status == "pending":
                 if (
-                    step.tool_name in required_evidence_tools
+                    step.tool_name in required_evidence_tools | required_action_tools
                     and step.tool_name not in observed_tools_before
                     and step.tool_name not in replacement_tools
                 ):
@@ -305,11 +308,17 @@ class OperationsAgent:
             and step.tool_name not in observed_tools
             for step in plan.steps
         )
+        pending_required_action = any(
+            step.status == "pending" and step.tool_name in required_action_tools
+            for step in plan.steps
+        )
         action, reason = proposal.action, proposal.reason
         if state.get("iterations", 0) >= self.settings.ops_max_iterations:
             action, reason = ReplanAction.NEED_HUMAN, "达到最大调查轮数，需要人工接管"
-        elif action == ReplanAction.FINISH and pending and (len(diagnostic_signals) < 2 or pending_required):
-            action, reason = ReplanAction.CONTINUE, "Harness要求知识、指标与日志均被观察且至少两个诊断信号成功，继续执行剩余只读步骤"
+        elif action == ReplanAction.FINISH and pending and (
+            len(diagnostic_signals) < 2 or pending_required or pending_required_action
+        ):
+            action, reason = ReplanAction.CONTINUE, "Harness要求完成必需证据步骤，并将用户明确要求的高风险操作送入人工审批门"
         elif action == ReplanAction.CONTINUE and not pending:
             action, reason = ReplanAction.FINISH, "没有更多待执行步骤，进入报告阶段"
         elif action == ReplanAction.REVISE and not added and pending:

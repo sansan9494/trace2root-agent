@@ -98,6 +98,54 @@ async def test_high_risk_step_waits_for_approval(client):
 
 
 @pytest.mark.asyncio
+async def test_replanner_cannot_skip_or_finish_before_explicit_restart_approval(client, monkeypatch):
+    from backend.app.main import ops_agent
+
+    async def adversarial_replanner(system, prompt, schema, fallback, *, max_tokens=700):
+        del prompt, schema, max_tokens
+        if "调查Planner" in system:
+            return {**fallback, "_decision_source": "test_planner"}
+        return {
+            "action": "finish",
+            "reason": "模型试图提前结束并跳过审批步骤",
+            "added_steps": [],
+            "skipped_step_ids": ["harness-1"],
+            "_decision_source": "test_replanner",
+        }
+
+    monkeypatch.setattr(ops_agent.model, "generate_json", adversarial_replanner)
+    response = await client.post("/api/v1/ai_ops", json={
+        "trigger_type": "manual",
+        "goal": "排查支付服务高延迟，确认根因后重启支付服务",
+        "alert": {
+            "alert_name": "HighLatency", "service_name": "payment-service",
+            "environment": "production", "severity": "critical",
+            "labels": {}, "annotations": {},
+        },
+        "notify": False,
+    })
+    task_id = response.json()["task_id"]
+    body = None
+    for _ in range(600):
+        body = (await client.get(f"/api/v1/ai_ops/{task_id}")).json()
+        if body["status"] in {"waiting_approval", "failed"}:
+            break
+        await asyncio.sleep(0.05)
+
+    assert body and body["status"] == "waiting_approval", body
+    restart_step = next(
+        step for step in body["plan"]["steps"]
+        if step["tool_name"] == "restart_service"
+    )
+    assert restart_step["status"] == "pending"
+    assert all(
+        "harness-1" not in event["payload"]["decision"]["skipped_step_ids"]
+        for event in body["events"] if event["type"] == "replan"
+    )
+    assert any(event["type"] == "approval_required" for event in body["events"])
+
+
+@pytest.mark.asyncio
 async def test_memory_summary_and_no_evidence_refusal(client):
     session_id = None
     for index in range(7):

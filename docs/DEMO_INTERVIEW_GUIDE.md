@@ -44,7 +44,7 @@
 
 ```bash
 wsl
-cd /mnt/c/Users/ss/code/oncall-agent
+cd /path/to/trace2root-agent
 bash scripts/demo_preflight.sh
 ```
 
